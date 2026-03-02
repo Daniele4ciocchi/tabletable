@@ -1,0 +1,19 @@
+import 'package:flutter/material.dart';
+
+import 'presentation/screens/home_screen.dart';
+
+/// Root widget dell'applicazione.
+class App extends StatelessWidget {
+  const App({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'TableTable',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+      ),
+      home: const HomeScreen(),
+    );
+  }
+}
