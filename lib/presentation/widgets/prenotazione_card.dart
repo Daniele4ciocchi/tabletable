@@ -62,7 +62,7 @@ class _PrenotazioneCardState extends State<PrenotazioneCard> {
             ),
             title: Text(widget.prenotazione.nome),
             subtitle: Text(
-              '${widget.prenotazione.numeroPersone} persone · ${widget.prenotazione.dataOra.day}/${widget.prenotazione.dataOra.month} · ${widget.prenotazione.dataOra.hour}:${widget.prenotazione.dataOra.minute.toString().padLeft(2, '0')}',
+              '${widget.prenotazione.numeroPersone} persone · ${widget.prenotazione.dataOra.day.toString().padLeft(2, '0')}/${widget.prenotazione.dataOra.month.toString().padLeft(2, '0')}/${widget.prenotazione.dataOra.year} · ${widget.prenotazione.dataOra.hour.toString().padLeft(2, '0')}:${widget.prenotazione.dataOra.minute.toString().padLeft(2, '0')}',
             ),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,

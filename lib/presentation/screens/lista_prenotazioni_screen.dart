@@ -4,7 +4,8 @@ import 'package:tabletable/presentation/screens/modifica_prenotazione_screen.dar
 import '../../data/models/prenotazione.dart';
 import '../../data/repositories/prenotazioni_repository.dart';
 import '../screens/mostra_prenotazione_screen.dart';
-import '../widgets/prenotazione_card.dart';
+import '../widgets/day_selector.dart';
+import '../widgets/prenotazioni_list.dart';
 import 'aggiungi_prenotazione_screen.dart';
 
 class ListaPrenotazioniScreen extends StatefulWidget {
@@ -17,17 +18,40 @@ class ListaPrenotazioniScreen extends StatefulWidget {
 
 class _ListaPrenotazioniScreenState extends State<ListaPrenotazioniScreen> {
   late List<Prenotazione> _prenotazioni;
+  late List<Prenotazione> _prenotazioniPassate;
+  late List<Prenotazione> _prenotazionRimanenti;
+  DateTime _giornoSelezionato = DateTime.now();
 
   @override
   void initState() {
     super.initState();
-    _prenotazioni = PrenotazioniRepository.instance.readToday();
+    fetchPrenotazioni();
   }
 
   void _ricarica() {
     setState(() {
-      _prenotazioni = PrenotazioniRepository.instance.readToday();
+      fetchPrenotazioni();
     });
+  }
+
+  void fetchPrenotazioni() {
+    final adesso = DateTime.now();
+    final soglia = DateTime(
+      _giornoSelezionato.year,
+      _giornoSelezionato.month,
+      _giornoSelezionato.day,
+      adesso.hour,
+      adesso.minute,
+    );
+    _prenotazioni = PrenotazioniRepository.instance.readForDate(
+      _giornoSelezionato,
+    );
+    _prenotazioniPassate = _prenotazioni
+        .where((p) => p.dataOra.isBefore(soglia))
+        .toList();
+    _prenotazionRimanenti = _prenotazioni
+        .where((p) => p.dataOra.isAfter(soglia))
+        .toList();
   }
 
   Future<void> _elimina(int id) async {
@@ -63,20 +87,38 @@ class _ListaPrenotazioniScreenState extends State<ListaPrenotazioniScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _prenotazioni.isEmpty
-          ? const Center(child: Text('Nessuna prenotazione'))
-          : ListView.builder(
-              itemCount: _prenotazioni.length,
-              itemBuilder: (context, index) {
-                final p = _prenotazioni[index];
-                return PrenotazioneCard(
-                  prenotazione: p,
-                  onElimina: () => _elimina(p.id!),
-                  onModifica: () => _modifica(p),
-                  onTap: () => _apriDettagli(p),
-                );
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            DaySelector(
+              selectedDate: _giornoSelezionato,
+              onDateChanged: (d) {
+                setState(() {
+                  _giornoSelezionato = d;
+                  fetchPrenotazioni();
+                });
               },
             ),
+            PrenotazioniList(
+              title: 'Prenotazioni rimanenti',
+              items: _prenotazionRimanenti,
+              onModifica: _modifica,
+              onTap: _apriDettagli,
+              onEliminaById: (id) => _elimina(id),
+            ),
+            const SizedBox(height: 16),
+            PrenotazioniList(
+              title: 'Prenotazioni passate',
+              items: _prenotazioniPassate,
+              onModifica: _modifica,
+              onTap: _apriDettagli,
+              onEliminaById: (id) => _elimina(id),
+            ),
+          ],
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _aggiungi,
         tooltip: 'Aggiungi prenotazione',

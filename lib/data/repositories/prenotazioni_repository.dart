@@ -47,6 +47,14 @@ class PrenotazioniRepository {
     }).toList();
   }
 
+  List<Prenotazione> readForDate(DateTime data) {
+    return readAll().where((p) {
+      return p.dataOra.year == data.year &&
+          p.dataOra.month == data.month &&
+          p.dataOra.day == data.day;
+    }).toList();
+  }
+
   Future<void> update(Prenotazione p) => _box!.put(p.id, p.toMap());
 
   Future<void> delete(int id) => _box!.delete(id);

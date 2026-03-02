@@ -42,6 +42,7 @@ class _AggiungiPrenotazioneScreenState
       Prenotazione(
         nome: _nomeController.text.trim(),
         numeroPersone: int.parse(_personeController.text.trim()),
+        dettagli: _dettagliController.text.trim(),
         dataOra: _dataOra,
       ),
     );
@@ -95,6 +96,33 @@ class _AggiungiPrenotazioneScreenState
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  const Text('Data: '),
+                  TextButton(
+                    onPressed: () async {
+                      final scelto = await showDatePicker(
+                        context: context,
+                        initialDate: _dataOra,
+                        firstDate: DateTime(2020),
+                        lastDate: DateTime(2100),
+                      );
+                      if (scelto != null) {
+                        setState(() {
+                          _dataOra = DateTime(
+                            scelto.year,
+                            scelto.month,
+                            scelto.day,
+                            _dataOra.hour,
+                            _dataOra.minute,
+                          );
+                        });
+                      }
+                    },
+                    child: Text(
+                      '${_dataOra.day}/${_dataOra.month}/${_dataOra.year}',
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
                   const Text('Orario: '),
                   // mostra data e ora e inserisci un pulsante per aprire il time picker
                   TextButton(
