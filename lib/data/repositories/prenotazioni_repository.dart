@@ -26,6 +26,7 @@ class PrenotazioniRepository {
           id: id,
           nome: dati['nome'] as String,
           numeroPersone: dati['numeroPersone'] as int,
+          dettagli: dati['dettagli'] as String? ?? '',
           dataOra: DateTime.parse(dati['dataOra'] as String),
         ),
       );
@@ -34,6 +35,19 @@ class PrenotazioniRepository {
     prenotazioni.sort((a, b) => a.dataOra.compareTo(b.dataOra));
     return prenotazioni;
   }
+
+  /// Restituisce solo le prenotazioni di oggi.
+  /// Stesso pattern di readAll(), ma con un filtro sulla data.
+  List<Prenotazione> readToday() {
+    final oggi = DateTime.now();
+    return readAll().where((p) {
+      return p.dataOra.year == oggi.year &&
+          p.dataOra.month == oggi.month &&
+          p.dataOra.day == oggi.day;
+    }).toList();
+  }
+
+  Future<void> update(Prenotazione p) => _box!.put(p.id, p.toMap());
 
   Future<void> delete(int id) => _box!.delete(id);
 }

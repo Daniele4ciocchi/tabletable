@@ -1,11 +1,11 @@
 class Prenotazione {
-  final int? id;
-  final String nome;
-  final int numeroPersone;
-  final String dettagli;
-  final DateTime dataOra;
+  int? id;
+  String nome;
+  int numeroPersone;
+  String dettagli;
+  DateTime dataOra;
 
-  const Prenotazione({
+  Prenotazione({
     this.id,
     required this.nome,
     required this.numeroPersone,

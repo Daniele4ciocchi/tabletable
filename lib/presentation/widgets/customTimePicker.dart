@@ -25,6 +25,9 @@ class _CustomTimePickerDialogState extends State<CustomTimePickerDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return TimePickerDialog(initialTime: selectedTime);
+    return TimePickerDialog(
+      initialTime: selectedTime,
+      initialEntryMode: TimePickerEntryMode.input,
+    );
   }
 }

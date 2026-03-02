@@ -3,15 +3,6 @@ import 'package:tabletable/presentation/widgets/customTimePicker.dart';
 
 import '../../data/models/prenotazione.dart';
 
-/// Apre la schermata di aggiunta e restituisce la [Prenotazione] inserita,
-/// oppure `null` se l'utente torna indietro senza confermare.
-Future<Prenotazione?> apriSchermataAggiungi(BuildContext context) {
-  return Navigator.push<Prenotazione>(
-    context,
-    MaterialPageRoute(builder: (_) => const ModificaPrenotazioneScreen()),
-  );
-}
-
 class ModificaPrenotazioneScreen extends StatefulWidget {
   final Prenotazione? prenotazione;
 
@@ -27,10 +18,22 @@ class _ModificaPrenotazioneScreenState
   final _formKey = GlobalKey<FormState>();
   final _nomeController = TextEditingController();
   final _personeController = TextEditingController();
-  var _dataOra = DateTime.now();
+  final _dettagliController = TextEditingController();
+  late DateTime _dataOra;
+
+  @override
+  void initState() {
+    super.initState();
+    final p = widget.prenotazione;
+    _nomeController.text = p?.nome ?? '';
+    _personeController.text = p?.numeroPersone.toString() ?? '';
+    _dettagliController.text = p?.dettagli ?? '';
+    _dataOra = p?.dataOra ?? DateTime.now();
+  }
 
   @override
   void dispose() {
+    _dettagliController.dispose();
     _nomeController.dispose();
     _personeController.dispose();
     super.dispose();
@@ -40,8 +43,10 @@ class _ModificaPrenotazioneScreenState
     if (!_formKey.currentState!.validate()) return;
     Navigator.of(context).pop(
       Prenotazione(
+        id: widget.prenotazione?.id,
         nome: _nomeController.text.trim(),
         numeroPersone: int.parse(_personeController.text.trim()),
+        dettagli: _dettagliController.text.trim(),
         dataOra: _dataOra,
       ),
     );
@@ -64,7 +69,6 @@ class _ModificaPrenotazioneScreenState
                   labelText: 'Nome',
                   border: OutlineInputBorder(),
                 ),
-                initialValue: widget.prenotazione?.nome,
                 validator: (v) => (v == null || v.trim().isEmpty)
                     ? 'Inserisci un nome'
                     : null,
@@ -76,13 +80,21 @@ class _ModificaPrenotazioneScreenState
                   labelText: 'Numero persone',
                   border: OutlineInputBorder(),
                 ),
-                initialValue: widget.prenotazione?.numeroPersone.toString(),
                 keyboardType: TextInputType.number,
                 validator: (v) {
                   final n = int.tryParse(v?.trim() ?? '');
                   if (n == null || n <= 0) return 'Inserisci un numero valido';
                   return null;
                 },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _dettagliController,
+                decoration: const InputDecoration(
+                  labelText: 'Dettagli',
+                  border: OutlineInputBorder(),
+                ),
+                maxLines: 3,
               ),
               const SizedBox(height: 16),
               Row(
@@ -120,10 +132,7 @@ class _ModificaPrenotazioneScreenState
                 ],
               ),
               const SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: _conferma,
-                child: const Text('Aggiungi'),
-              ),
+              ElevatedButton(onPressed: _conferma, child: const Text('Salva')),
             ],
           ),
         ),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:tabletable/presentation/screens/modifica_prenotazione_screen.dart';
 
 import '../../data/models/prenotazione.dart';
 import '../../data/repositories/prenotazioni_repository.dart';
+import '../screens/mostra_prenotazione_screen.dart';
 import '../widgets/prenotazione_card.dart';
 import 'aggiungi_prenotazione_screen.dart';
 
@@ -19,17 +21,35 @@ class _ListaPrenotazioniScreenState extends State<ListaPrenotazioniScreen> {
   @override
   void initState() {
     super.initState();
-    _prenotazioni = PrenotazioniRepository.instance.readAll();
+    _prenotazioni = PrenotazioniRepository.instance.readToday();
   }
 
   void _ricarica() {
     setState(() {
-      _prenotazioni = PrenotazioniRepository.instance.readAll();
+      _prenotazioni = PrenotazioniRepository.instance.readToday();
     });
   }
 
   Future<void> _elimina(int id) async {
     await PrenotazioniRepository.instance.delete(id);
+    _ricarica();
+  }
+
+  Future<void> _modifica(Prenotazione p) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => ModificaPrenotazioneScreen(prenotazione: p),
+      ),
+    );
+    _ricarica();
+  }
+
+  Future<void> _apriDettagli(Prenotazione p) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => PrenotazioneScreen(prenotazione: p)),
+    );
     _ricarica();
   }
 
@@ -52,6 +72,8 @@ class _ListaPrenotazioniScreenState extends State<ListaPrenotazioniScreen> {
                 return PrenotazioneCard(
                   prenotazione: p,
                   onElimina: () => _elimina(p.id!),
+                  onModifica: () => _modifica(p),
+                  onTap: () => _apriDettagli(p),
                 );
               },
             ),

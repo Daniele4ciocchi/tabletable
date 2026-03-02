@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabletable/presentation/screens/dati_screen.dart';
 
 import '../widgets/navbar.dart';
 import 'lista_prenotazioni_screen.dart';
@@ -14,8 +15,8 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
 
   static const List<Widget> _pages = [
+    DatiScreen(),
     ListaPrenotazioniScreen(),
-    Center(child: Text('Prenotazioni')),
     Center(child: Text('Impostazioni')),
   ];
 

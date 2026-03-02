@@ -25,12 +25,14 @@ class _AggiungiPrenotazioneScreenState
   final _formKey = GlobalKey<FormState>();
   final _nomeController = TextEditingController();
   final _personeController = TextEditingController();
+  final _dettagliController = TextEditingController();
   var _dataOra = DateTime.now();
 
   @override
   void dispose() {
     _nomeController.dispose();
     _personeController.dispose();
+    _dettagliController.dispose();
     super.dispose();
   }
 
@@ -79,6 +81,15 @@ class _AggiungiPrenotazioneScreenState
                   if (n == null || n <= 0) return 'Inserisci un numero valido';
                   return null;
                 },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _dettagliController,
+                decoration: const InputDecoration(
+                  labelText: 'Descrizione',
+                  border: OutlineInputBorder(),
+                ),
+                keyboardType: TextInputType.text,
               ),
               const SizedBox(height: 16),
               Row(
