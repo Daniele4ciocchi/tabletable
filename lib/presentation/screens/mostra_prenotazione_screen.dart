@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../data/models/prenotazione.dart';
 import '../../data/repositories/prenotazioni_repository.dart';
 import '../widgets/info_row.dart';
-import 'modifica_prenotazione_screen.dart';
+import 'aggiungi_prenotazione_screen.dart';
 
 String _formatDataOra(DateTime dt) {
   final giorni = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'];
@@ -37,7 +37,39 @@ class PrenotazioneScreen extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Prenotazione')),
+      appBar: AppBar(
+        title: const Text('Prenotazione'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.delete_outline),
+            tooltip: 'Elimina',
+            onPressed: () async {
+              final conferma = await showDialog<bool>(
+                context: context,
+                builder: (ctx) => AlertDialog(
+                  title: const Text('Elimina prenotazione'),
+                  content: Text(
+                    'Vuoi eliminare la prenotazione di ${prenotazione.nome}?',
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(ctx).pop(false),
+                      child: const Text('Annulla'),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.of(ctx).pop(true),
+                      child: const Text('Elimina'),
+                    ),
+                  ],
+                ),
+              );
+              if (conferma != true) return;
+              await PrenotazioniRepository.instance.delete(prenotazione.id!);
+              if (context.mounted) Navigator.of(context).pop();
+            },
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -88,6 +120,14 @@ class PrenotazioneScreen extends StatelessWidget {
                       value: prenotazione.dettagli,
                     ),
                   ],
+                  if (prenotazione.telefono.isNotEmpty) ...[
+                    const Divider(indent: 56, endIndent: 16, height: 1),
+                    InfoRow(
+                      icon: Icons.phone_outlined,
+                      label: 'Telefono',
+                      value: prenotazione.telefono,
+                    ),
+                  ],
                 ],
               ),
             ),
@@ -96,13 +136,7 @@ class PrenotazioneScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final modificata = await Navigator.push<Prenotazione>(
-            context,
-            MaterialPageRoute(
-              builder: (_) =>
-                  ModificaPrenotazioneScreen(prenotazione: prenotazione),
-            ),
-          );
+          final modificata = await apriSchermataModifica(context, prenotazione);
           if (modificata == null) return;
           await PrenotazioniRepository.instance.update(modificata);
           if (context.mounted) Navigator.of(context).pop();

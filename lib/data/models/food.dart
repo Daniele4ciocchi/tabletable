@@ -1,17 +1,15 @@
-class Prenotazione {
+class Food {
   int? id;
   String nome;
   int numeroPersone;
   String dettagli;
-  String telefono;
   DateTime dataOra;
 
-  Prenotazione({
+  Food({
     this.id,
     required this.nome,
     required this.numeroPersone,
     this.dettagli = '',
-    this.telefono = '',
     required this.dataOra,
   });
 
@@ -19,7 +17,6 @@ class Prenotazione {
     'nome': nome,
     'numeroPersone': numeroPersone,
     'dettagli': dettagli,
-    'telefono': telefono,
     'dataOra': dataOra.toIso8601String(),
   };
 }

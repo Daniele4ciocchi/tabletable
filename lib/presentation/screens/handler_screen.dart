@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tabletable/presentation/screens/dati_screen.dart';
+import 'package:tabletable/presentation/screens/impostazioni_screen.dart';
 
 import '../widgets/navbar.dart';
 import 'lista_prenotazioni_screen.dart';
@@ -17,7 +18,8 @@ class _HomeScreenState extends State<HomeScreen> {
   static const List<Widget> _pages = [
     DatiScreen(),
     ListaPrenotazioniScreen(),
-    Center(child: Text('Impostazioni')),
+    Center(child: Text('Cibi')),
+    ImpostazioniScreen(),
   ];
 
   @override

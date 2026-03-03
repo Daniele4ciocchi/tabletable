@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tabletable/presentation/screens/modifica_prenotazione_screen.dart';
 
 import '../../data/models/prenotazione.dart';
 import '../../data/repositories/prenotazioni_repository.dart';
@@ -60,12 +59,10 @@ class _ListaPrenotazioniScreenState extends State<ListaPrenotazioniScreen> {
   }
 
   Future<void> _modifica(Prenotazione p) async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => ModificaPrenotazioneScreen(prenotazione: p),
-      ),
-    );
+    final modificata = await apriSchermataModifica(context, p);
+    if (modificata != null) {
+      await PrenotazioniRepository.instance.update(modificata);
+    }
     _ricarica();
   }
 
@@ -108,21 +105,25 @@ class _ListaPrenotazioniScreenState extends State<ListaPrenotazioniScreen> {
                 _giornoSelezionato.month == DateTime.now().month &&
                 _giornoSelezionato.day == DateTime.now().day) ...[
               PrenotazioniList(
-                title: 'Prenotazioni rimanenti',
+                title:
+                    'Prenotazioni rimanenti (${_prenotazionRimanenti.length})',
                 items: _prenotazionRimanenti,
                 onModifica: _modifica,
                 onTap: _apriDettagli,
                 onEliminaById: (id) => _elimina(id),
               ),
               const SizedBox(height: 16),
-              if (_prenotazioniPassate.isNotEmpty)
+              if (_prenotazioniPassate.isNotEmpty) ...[
+                Divider(thickness: 2, height: 32, indent: 30, endIndent: 30),
                 PrenotazioniList(
-                  title: 'Prenotazioni passate',
+                  title:
+                      'Prenotazioni passate (${_prenotazioniPassate.length})',
                   items: _prenotazioniPassate,
                   onModifica: _modifica,
                   onTap: _apriDettagli,
                   onEliminaById: (id) => _elimina(id),
                 ),
+              ],
             ] else ...[
               PrenotazioniList(
                 title: 'Prenotazioni',

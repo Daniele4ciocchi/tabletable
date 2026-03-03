@@ -3,8 +3,14 @@ import 'package:flutter/material.dart';
 class InfoCard extends StatelessWidget {
   final String title;
   final String value;
+  final IconData icon;
 
-  const InfoCard({super.key, required this.title, required this.value});
+  const InfoCard({
+    super.key,
+    required this.title,
+    required this.value,
+    required this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +27,8 @@ class InfoCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Icon(icon, size: 28, color: colorScheme.primary),
+            const SizedBox(height: 12),
             Text(
               title,
               style: textTheme.labelLarge?.copyWith(
@@ -41,10 +49,10 @@ class InfoCard extends StatelessWidget {
             const SizedBox(height: 6),
             Container(
               height: 4,
-              width: 48,
+              width: double.infinity,
               decoration: BoxDecoration(
                 color: colorScheme.primary.withAlpha((0.12 * 255).round()),
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(16),
               ),
             ),
           ],

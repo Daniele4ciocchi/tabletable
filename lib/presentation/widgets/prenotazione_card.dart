@@ -50,19 +50,21 @@ class _PrenotazioneCardState extends State<PrenotazioneCard> {
             ],
           ),
           child: ListTile(
-            leading: CircleAvatar(
-              backgroundColor: colorScheme.primaryContainer,
-              child: Text(
-                widget.prenotazione.nome[0].toUpperCase(),
-                style: TextStyle(
-                  color: colorScheme.onPrimaryContainer,
-                  fontWeight: FontWeight.bold,
+            leading: SizedBox(
+              width: 120,
+              child: Center(
+                child: Text(
+                  '${widget.prenotazione.dataOra.hour.toString().padLeft(2, '0')}:${widget.prenotazione.dataOra.minute.toString().padLeft(2, '0')}',
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    color: colorScheme.primary,
+                    fontSize: 40,
+                  ),
                 ),
               ),
             ),
             title: Text(widget.prenotazione.nome),
             subtitle: Text(
-              '${widget.prenotazione.numeroPersone} persone · ${widget.prenotazione.dataOra.day.toString().padLeft(2, '0')}/${widget.prenotazione.dataOra.month.toString().padLeft(2, '0')}/${widget.prenotazione.dataOra.year} · ${widget.prenotazione.dataOra.hour.toString().padLeft(2, '0')}:${widget.prenotazione.dataOra.minute.toString().padLeft(2, '0')}',
+              '${widget.prenotazione.numeroPersone} persone · ${widget.prenotazione.dataOra.day.toString().padLeft(2, '0')}/${widget.prenotazione.dataOra.month.toString().padLeft(2, '0')}/${widget.prenotazione.dataOra.year}',
             ),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
@@ -70,10 +72,6 @@ class _PrenotazioneCardState extends State<PrenotazioneCard> {
                 IconButton(
                   icon: const Icon(Icons.edit),
                   onPressed: widget.onModifica,
-                ),
-                IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: widget.onElimina,
                 ),
               ],
             ),

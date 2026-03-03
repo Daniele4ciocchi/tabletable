@@ -40,11 +40,13 @@ class _DatiScreenState extends State<DatiScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   InfoCard(
+                    icon: Icons.event_note,
                     title: 'Prenotazioni oggi',
                     value: _prenotazioni.length.toString(),
                   ),
                   const SizedBox(height: 12),
                   InfoCard(
+                    icon: Icons.people,
                     title: 'Persone totali',
                     value: _prenotazioni
                         .fold(0, (sum, p) => sum + p.numeroPersone)
@@ -52,6 +54,7 @@ class _DatiScreenState extends State<DatiScreen> {
                   ),
                   const SizedBox(height: 12),
                   InfoCard(
+                    icon: Icons.person,
                     title: 'Prenotazione più grande',
                     value: _prenotazioni.isEmpty
                         ? 'N/A'

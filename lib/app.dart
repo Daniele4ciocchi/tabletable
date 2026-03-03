@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'presentation/screens/home_screen.dart';
+import 'presentation/screens/handler_screen.dart';
 
 /// Root widget dell'applicazione.
 class App extends StatelessWidget {

@@ -18,6 +18,9 @@ class MyNavbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      fixedColor: Theme.of(context).colorScheme.primary,
+      elevation: 8,
+      type: BottomNavigationBarType.fixed,
       currentIndex: selectedIndex,
       onTap: onTap,
       items: const [
@@ -27,9 +30,10 @@ class MyNavbar extends StatelessWidget {
           label: 'Prenotazioni',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: 'Impostazioni',
+          icon: Icon(Icons.business_rounded),
+          label: 'Fornitori',
         ),
+        BottomNavigationBarItem(icon: Icon(Icons.fastfood), label: 'Cibi'),
       ],
     );
   }

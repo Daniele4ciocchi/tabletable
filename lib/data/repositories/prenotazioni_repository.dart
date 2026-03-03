@@ -27,6 +27,7 @@ class PrenotazioniRepository {
           nome: dati['nome'] as String,
           numeroPersone: dati['numeroPersone'] as int,
           dettagli: dati['dettagli'] as String? ?? '',
+          telefono: dati['telefono'] as String? ?? '',
           dataOra: DateTime.parse(dati['dataOra'] as String),
         ),
       );
