@@ -23,6 +23,7 @@ class _DatiScreenState extends State<DatiScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
       body: Center(
         child: Container(
           width: double.infinity,

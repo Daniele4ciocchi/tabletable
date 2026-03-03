@@ -5,15 +5,22 @@ import '../../data/models/prenotazione.dart';
 
 /// Apre la schermata di aggiunta e restituisce la [Prenotazione] inserita,
 /// oppure `null` se l'utente torna indietro senza confermare.
-Future<Prenotazione?> apriSchermataAggiungi(BuildContext context) {
+Future<Prenotazione?> apriSchermataAggiungi(
+  BuildContext context, {
+  DateTime? initialDate,
+}) {
   return Navigator.push<Prenotazione>(
     context,
-    MaterialPageRoute(builder: (_) => const AggiungiPrenotazioneScreen()),
+    MaterialPageRoute(
+      builder: (_) => AggiungiPrenotazioneScreen(initialDate: initialDate),
+    ),
   );
 }
 
 class AggiungiPrenotazioneScreen extends StatefulWidget {
-  const AggiungiPrenotazioneScreen({super.key});
+  final DateTime? initialDate;
+
+  const AggiungiPrenotazioneScreen({super.key, this.initialDate});
 
   @override
   State<AggiungiPrenotazioneScreen> createState() =>
@@ -26,7 +33,13 @@ class _AggiungiPrenotazioneScreenState
   final _nomeController = TextEditingController();
   final _personeController = TextEditingController();
   final _dettagliController = TextEditingController();
-  var _dataOra = DateTime.now();
+  late DateTime _dataOra;
+
+  @override
+  void initState() {
+    super.initState();
+    _dataOra = widget.initialDate ?? DateTime.now();
+  }
 
   @override
   void dispose() {

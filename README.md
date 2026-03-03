@@ -1,16 +1,12 @@
 # tabletable
 
-A new Flutter project.
+una semplice app open source scritta in flutter per prendere prenotazioni  
 
-## Getting Started
+## specifiche
 
-This project is a starting point for a Flutter application.
+l'app permette di prendere prenotazioni e mostra tutte le prenotazioni riguardanti la giornata corrente,
+è possibile controllare prenotzioni precedenti o successive, è possibile modificarle o eliminarle.
 
-A few resources to get you started if this is your first Flutter project:
+ogni prenotazione è composta da un nome, un numero di persone e una descrizione oltre che data e ora.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

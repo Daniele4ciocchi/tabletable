@@ -78,7 +78,10 @@ class _ListaPrenotazioniScreenState extends State<ListaPrenotazioniScreen> {
   }
 
   Future<void> _aggiungi() async {
-    final nuova = await apriSchermataAggiungi(context);
+    final nuova = await apriSchermataAggiungi(
+      context,
+      initialDate: _giornoSelezionato,
+    );
     if (nuova == null) return;
     await PrenotazioniRepository.instance.create(nuova);
     _ricarica();
@@ -101,21 +104,34 @@ class _ListaPrenotazioniScreenState extends State<ListaPrenotazioniScreen> {
                 });
               },
             ),
-            PrenotazioniList(
-              title: 'Prenotazioni rimanenti',
-              items: _prenotazionRimanenti,
-              onModifica: _modifica,
-              onTap: _apriDettagli,
-              onEliminaById: (id) => _elimina(id),
-            ),
-            const SizedBox(height: 16),
-            PrenotazioniList(
-              title: 'Prenotazioni passate',
-              items: _prenotazioniPassate,
-              onModifica: _modifica,
-              onTap: _apriDettagli,
-              onEliminaById: (id) => _elimina(id),
-            ),
+            if (_giornoSelezionato.year == DateTime.now().year &&
+                _giornoSelezionato.month == DateTime.now().month &&
+                _giornoSelezionato.day == DateTime.now().day) ...[
+              PrenotazioniList(
+                title: 'Prenotazioni rimanenti',
+                items: _prenotazionRimanenti,
+                onModifica: _modifica,
+                onTap: _apriDettagli,
+                onEliminaById: (id) => _elimina(id),
+              ),
+              const SizedBox(height: 16),
+              if (_prenotazioniPassate.isNotEmpty)
+                PrenotazioniList(
+                  title: 'Prenotazioni passate',
+                  items: _prenotazioniPassate,
+                  onModifica: _modifica,
+                  onTap: _apriDettagli,
+                  onEliminaById: (id) => _elimina(id),
+                ),
+            ] else ...[
+              PrenotazioniList(
+                title: 'Prenotazioni',
+                items: _prenotazioni,
+                onModifica: _modifica,
+                onTap: _apriDettagli,
+                onEliminaById: (id) => _elimina(id),
+              ),
+            ],
           ],
         ),
       ),
