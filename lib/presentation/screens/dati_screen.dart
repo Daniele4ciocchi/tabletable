@@ -29,41 +29,37 @@ class _DatiScreenState extends State<DatiScreen> {
           width: double.infinity,
           padding: const EdgeInsets.all(20),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
                 'Dati di oggi',
+                textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(height: 30),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  InfoCard(
-                    icon: Icons.event_note,
-                    title: 'Prenotazioni oggi',
-                    value: _prenotazioni.length.toString(),
-                  ),
-                  const SizedBox(height: 12),
-                  InfoCard(
-                    icon: Icons.people,
-                    title: 'Persone totali',
-                    value: _prenotazioni
-                        .fold(0, (sum, p) => sum + p.numeroPersone)
-                        .toString(),
-                  ),
-                  const SizedBox(height: 12),
-                  InfoCard(
-                    icon: Icons.person,
-                    title: 'Prenotazione più grande',
-                    value: _prenotazioni.isEmpty
-                        ? 'N/A'
-                        : _prenotazioni
-                              .map((p) => p.numeroPersone)
-                              .reduce((a, b) => a > b ? a : b)
-                              .toString(),
-                  ),
-                ],
+              InfoCard(
+                icon: Icons.event_note,
+                title: 'Prenotazioni oggi',
+                value: _prenotazioni.length.toString(),
+              ),
+              const SizedBox(height: 12),
+              InfoCard(
+                icon: Icons.people,
+                title: 'Persone totali',
+                value: _prenotazioni
+                    .fold(0, (sum, p) => sum + p.numeroPersone)
+                    .toString(),
+              ),
+              const SizedBox(height: 12),
+              InfoCard(
+                icon: Icons.person,
+                title: 'Prenotazione più grande',
+                value: _prenotazioni.isEmpty
+                    ? 'N/A'
+                    : _prenotazioni
+                          .map((p) => p.numeroPersone)
+                          .reduce((a, b) => a > b ? a : b)
+                          .toString(),
               ),
             ],
           ),

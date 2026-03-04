@@ -4,7 +4,7 @@ import '../../data/models/prenotazione.dart';
 
 /// Apre la schermata di aggiunta e restituisce la [Prenotazione] inserita,
 /// oppure `null` se l'utente torna indietro senza confermare.
-Future<Prenotazione?> apriSchermataAggiungi(
+Future<Prenotazione?> apriSchermataAggiungiPrenotazione(
   BuildContext context, {
   DateTime? initialDate,
 }) {
@@ -18,7 +18,7 @@ Future<Prenotazione?> apriSchermataAggiungi(
 
 /// Apre la schermata di modifica e restituisce la [Prenotazione] modificata,
 /// oppure `null` se l'utente torna indietro senza confermare.
-Future<Prenotazione?> apriSchermataModifica(
+Future<Prenotazione?> apriSchermataModificaPrenotazione(
   BuildContext context,
   Prenotazione prenotazione,
 ) {
@@ -176,6 +176,11 @@ class _PrenotazioneFormScreenState extends State<PrenotazioneFormScreen> {
                 children: [
                   const Text('Data: '),
                   TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: Theme.of(
+                        context,
+                      ).colorScheme.surfaceBright,
+                    ),
                     onPressed: () async {
                       final scelto = await showDatePicker(
                         context: context,
@@ -203,6 +208,11 @@ class _PrenotazioneFormScreenState extends State<PrenotazioneFormScreen> {
                   const SizedBox(width: 12),
                   const Text('Orario: '),
                   TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: Theme.of(
+                        context,
+                      ).colorScheme.surfaceBright,
+                    ),
                     onPressed: () async {
                       final time = await showTimePicker(
                         context: context,
@@ -227,6 +237,7 @@ class _PrenotazioneFormScreenState extends State<PrenotazioneFormScreen> {
                   ),
                 ],
               ),
+              const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
                 runSpacing: 4,

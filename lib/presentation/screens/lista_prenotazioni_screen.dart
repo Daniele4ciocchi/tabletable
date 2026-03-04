@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabletable/presentation/widgets/upper_banner.dart';
 
 import '../../data/models/prenotazione.dart';
 import '../../data/repositories/prenotazioni_repository.dart';
@@ -59,7 +60,7 @@ class _ListaPrenotazioniScreenState extends State<ListaPrenotazioniScreen> {
   }
 
   Future<void> _modifica(Prenotazione p) async {
-    final modificata = await apriSchermataModifica(context, p);
+    final modificata = await apriSchermataModificaPrenotazione(context, p);
     if (modificata != null) {
       await PrenotazioniRepository.instance.update(modificata);
     }
@@ -75,7 +76,7 @@ class _ListaPrenotazioniScreenState extends State<ListaPrenotazioniScreen> {
   }
 
   Future<void> _aggiungi() async {
-    final nuova = await apriSchermataAggiungi(
+    final nuova = await apriSchermataAggiungiPrenotazione(
       context,
       initialDate: _giornoSelezionato,
     );
@@ -86,60 +87,92 @@ class _ListaPrenotazioniScreenState extends State<ListaPrenotazioniScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final oggi = DateTime.now();
+    final isOggi =
+        _giornoSelezionato.year == oggi.year &&
+        _giornoSelezionato.month == oggi.month &&
+        _giornoSelezionato.day == oggi.day;
+
     return Scaffold(
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            DaySelector(
-              selectedDate: _giornoSelezionato,
-              onDateChanged: (d) {
-                setState(() {
-                  _giornoSelezionato = d;
-                  fetchPrenotazioni();
-                });
-              },
+      body: CustomScrollView(
+        slivers: [
+          // ── Header: banner + selettore giorno ──
+          SliverPadding(
+            padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+            sliver: SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  UpperBanner(
+                    icon: Icons.notes_outlined,
+                    title: '${_prenotazioni.length} prenotazioni',
+                    subtitle: 'Prenotazioni registrate',
+                  ),
+                  DaySelector(
+                    selectedDate: _giornoSelezionato,
+                    onDateChanged: (d) {
+                      setState(() {
+                        _giornoSelezionato = d;
+                        fetchPrenotazioni();
+                      });
+                    },
+                  ),
+                ],
+              ),
             ),
-            if (_giornoSelezionato.year == DateTime.now().year &&
-                _giornoSelezionato.month == DateTime.now().month &&
-                _giornoSelezionato.day == DateTime.now().day) ...[
-              PrenotazioniList(
-                title:
-                    'Prenotazioni rimanenti (${_prenotazionRimanenti.length})',
-                items: _prenotazionRimanenti,
-                onModifica: _modifica,
-                onTap: _apriDettagli,
-                onEliminaById: (id) => _elimina(id),
+          ),
+
+          // ── Lista prenotazioni ──
+          SliverPadding(
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 96),
+            sliver: SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (isOggi) ...[
+                    PrenotazioniList(
+                      title:
+                          'Prenotazioni rimanenti (${_prenotazionRimanenti.length})',
+                      items: _prenotazionRimanenti,
+                      onModifica: _modifica,
+                      onTap: _apriDettagli,
+                      onEliminaById: (id) => _elimina(id),
+                    ),
+                    const SizedBox(height: 16),
+                    if (_prenotazioniPassate.isNotEmpty) ...[
+                      Divider(
+                        thickness: 2,
+                        height: 32,
+                        indent: 30,
+                        endIndent: 30,
+                      ),
+                      PrenotazioniList(
+                        title:
+                            'Prenotazioni passate (${_prenotazioniPassate.length})',
+                        items: _prenotazioniPassate,
+                        onModifica: _modifica,
+                        onTap: _apriDettagli,
+                        onEliminaById: (id) => _elimina(id),
+                      ),
+                    ],
+                  ] else ...[
+                    PrenotazioniList(
+                      title: 'Prenotazioni',
+                      items: _prenotazioni,
+                      onModifica: _modifica,
+                      onTap: _apriDettagli,
+                      onEliminaById: (id) => _elimina(id),
+                    ),
+                  ],
+                ],
               ),
-              const SizedBox(height: 16),
-              if (_prenotazioniPassate.isNotEmpty) ...[
-                Divider(thickness: 2, height: 32, indent: 30, endIndent: 30),
-                PrenotazioniList(
-                  title:
-                      'Prenotazioni passate (${_prenotazioniPassate.length})',
-                  items: _prenotazioniPassate,
-                  onModifica: _modifica,
-                  onTap: _apriDettagli,
-                  onEliminaById: (id) => _elimina(id),
-                ),
-              ],
-            ] else ...[
-              PrenotazioniList(
-                title: 'Prenotazioni',
-                items: _prenotazioni,
-                onModifica: _modifica,
-                onTap: _apriDettagli,
-                onEliminaById: (id) => _elimina(id),
-              ),
-            ],
-          ],
-        ),
+            ),
+          ),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: _aggiungi,
-        tooltip: 'Aggiungi prenotazione',
-        child: const Icon(Icons.add),
+        icon: const Icon(Icons.add_rounded),
+        label: const Text('Aggiungi prenotazione'),
       ),
     );
   }

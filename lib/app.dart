@@ -18,13 +18,13 @@ class App extends StatelessWidget {
       ),
       darkTheme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 2, 147, 0),
+          seedColor: const Color.fromARGB(255, 147, 0, 0),
           brightness: Brightness.dark,
         ),
         useMaterial3: true,
       ),
       themeMode: ThemeMode.system,
-      home: const HomeScreen(),
+      home: const HandlerScreen(),
     );
   }
 }

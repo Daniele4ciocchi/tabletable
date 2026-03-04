@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:tabletable/presentation/screens/lista_fornitori_screen.dart';
 import 'package:tabletable/presentation/screens/dati_screen.dart';
-import 'package:tabletable/presentation/screens/impostazioni_screen.dart';
+import 'package:tabletable/presentation/screens/spese_screen.dart';
 
 import '../widgets/navbar.dart';
 import 'lista_prenotazioni_screen.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HandlerScreen extends StatefulWidget {
+  const HandlerScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HandlerScreen> createState() => _HandlerScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HandlerScreenState extends State<HandlerScreen> {
   int _currentIndex = 0;
 
   static const List<Widget> _pages = [
     DatiScreen(),
     ListaPrenotazioniScreen(),
-    Center(child: Text('Cibi')),
-    ImpostazioniScreen(),
+    FornitoriScreen(),
+    SpeseScreen(),
   ];
 
   @override

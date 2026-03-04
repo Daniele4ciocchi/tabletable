@@ -43,7 +43,6 @@ class PrenotazioniList extends StatelessWidget {
                   final p = items[index];
                   return PrenotazioneCard(
                     prenotazione: p,
-                    onElimina: () => onEliminaById(p.id!),
                     onModifica: () => onModifica(p),
                     onTap: () => onTap(p),
                   );

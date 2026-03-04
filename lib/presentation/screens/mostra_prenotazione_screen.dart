@@ -2,29 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../data/models/prenotazione.dart';
 import '../../data/repositories/prenotazioni_repository.dart';
+import '../../utils/date_utils.dart';
 import '../widgets/info_row.dart';
 import 'aggiungi_prenotazione_screen.dart';
-
-String _formatDataOra(DateTime dt) {
-  final giorni = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'];
-  final mesi = [
-    'Gen',
-    'Feb',
-    'Mar',
-    'Apr',
-    'Mag',
-    'Giu',
-    'Lug',
-    'Ago',
-    'Set',
-    'Ott',
-    'Nov',
-    'Dic',
-  ];
-  final ora =
-      '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}';
-  return '${giorni[dt.weekday - 1]} ${dt.day} ${mesi[dt.month - 1]} · $ora';
-}
 
 class PrenotazioneScreen extends StatelessWidget {
   final Prenotazione prenotazione;
@@ -110,7 +90,7 @@ class PrenotazioneScreen extends StatelessWidget {
                   InfoRow(
                     icon: Icons.calendar_today_outlined,
                     label: 'Data e ora',
-                    value: _formatDataOra(prenotazione.dataOra),
+                    value: formatDataOra(prenotazione.dataOra),
                   ),
                   if (prenotazione.dettagli.isNotEmpty) ...[
                     const Divider(indent: 56, endIndent: 16, height: 1),
@@ -136,7 +116,10 @@ class PrenotazioneScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final modificata = await apriSchermataModifica(context, prenotazione);
+          final modificata = await apriSchermataModificaPrenotazione(
+            context,
+            prenotazione,
+          );
           if (modificata == null) return;
           await PrenotazioniRepository.instance.update(modificata);
           if (context.mounted) Navigator.of(context).pop();

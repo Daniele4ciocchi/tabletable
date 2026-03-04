@@ -18,8 +18,8 @@ class InfoCard extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Card(
-      elevation: 1,
-      color: colorScheme.surfaceContainerHighest,
+      elevation: 0,
+      color: colorScheme.primaryContainer,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
@@ -32,7 +32,7 @@ class InfoCard extends StatelessWidget {
             Text(
               title,
               style: textTheme.labelLarge?.copyWith(
-                color: colorScheme.onSurfaceVariant,
+                color: colorScheme.onPrimaryContainer,
                 fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.center,

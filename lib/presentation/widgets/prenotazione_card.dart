@@ -4,14 +4,12 @@ import '../../data/models/prenotazione.dart';
 
 class PrenotazioneCard extends StatefulWidget {
   final Prenotazione prenotazione;
-  final VoidCallback onElimina;
   final VoidCallback onTap;
   final VoidCallback onModifica;
 
   const PrenotazioneCard({
     super.key,
     required this.prenotazione,
-    required this.onElimina,
     required this.onTap,
     required this.onModifica,
   });

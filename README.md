@@ -10,3 +10,10 @@ l'app permette di prendere prenotazioni e mostra tutte le prenotazioni riguardan
 ogni prenotazione è composta da un nome, un numero di persone e una descrizione oltre che data e ora.
 
 
+## implementazioni future 
+
+- connessione peer to peer per condividere dati di prenotazioni 
+    - da capire come 
+    - idea del web server locale semplice ma funziona solo in lan
+- esportazioni di dati riguardanti le prenotazioni mensili, settimanali (statistiche)
+- 
