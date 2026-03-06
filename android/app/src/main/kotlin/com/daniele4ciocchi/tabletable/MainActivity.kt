@@ -1,4 +1,4 @@
-package com.example.tabletable
+package com.daniele4ciocchi.tabletable
 
 import io.flutter.embedding.android.FlutterActivity
 

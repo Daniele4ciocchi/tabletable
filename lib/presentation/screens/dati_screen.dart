@@ -31,35 +31,66 @@ class _DatiScreenState extends State<DatiScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                'Dati di oggi',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headlineMedium,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Dati di oggi',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                ],
               ),
+
               const SizedBox(height: 30),
-              InfoCard(
-                icon: Icons.event_note,
-                title: 'Prenotazioni oggi',
-                value: _prenotazioni.length.toString(),
-              ),
-              const SizedBox(height: 12),
-              InfoCard(
-                icon: Icons.people,
-                title: 'Persone totali',
-                value: _prenotazioni
-                    .fold(0, (sum, p) => sum + p.numeroPersone)
-                    .toString(),
-              ),
-              const SizedBox(height: 12),
-              InfoCard(
-                icon: Icons.person,
-                title: 'Prenotazione più grande',
-                value: _prenotazioni.isEmpty
-                    ? 'N/A'
-                    : _prenotazioni
-                          .map((p) => p.numeroPersone)
-                          .reduce((a, b) => a > b ? a : b)
+
+              Row(
+                children: [
+                  Expanded(
+                    child: InfoCard(
+                      icon: Icons.event_note,
+                      title: 'Prenotazioni oggi',
+                      value: _prenotazioni.length.toString(),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: InfoCard(
+                      icon: Icons.people,
+                      title: 'Persone totali',
+                      value: _prenotazioni
+                          .fold(0, (sum, p) => sum + p.numeroPersone)
                           .toString(),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  Expanded(
+                    child: InfoCard(
+                      icon: Icons.event_busy,
+                      title: 'Posti rimanenti',
+                      value:
+                          (Prenotazione.copertiTotali -
+                                  _prenotazioni.fold(
+                                    0,
+                                    (sum, p) => sum + p.numeroPersone,
+                                  ))
+                              .toString(),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: InfoCard(
+                      icon: Icons.chair,
+                      title: 'Posti totali',
+                      value: Prenotazione.copertiTotali.toString(),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

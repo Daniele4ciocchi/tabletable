@@ -1,4 +1,6 @@
 class Prenotazione {
+  static int _copertiTotali = 20;
+
   int? id;
   String nome;
   int numeroPersone;
@@ -22,4 +24,10 @@ class Prenotazione {
     'telefono': telefono,
     'dataOra': dataOra.toIso8601String(),
   };
+
+  static set copertiTotali(int value) {
+    _copertiTotali = value;
+  }
+
+  static get copertiTotali => _copertiTotali;
 }

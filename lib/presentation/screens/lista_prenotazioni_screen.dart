@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:tabletable/presentation/widgets/upper_banner.dart';
 
@@ -21,11 +23,21 @@ class _ListaPrenotazioniScreenState extends State<ListaPrenotazioniScreen> {
   late List<Prenotazione> _prenotazioniPassate;
   late List<Prenotazione> _prenotazionRimanenti;
   DateTime _giornoSelezionato = DateTime.now();
+  Timer? _timer;
 
   @override
   void initState() {
     super.initState();
     fetchPrenotazioni();
+    _timer = Timer.periodic(const Duration(minutes: 1), (_) {
+      if (mounted) _ricarica();
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   void _ricarica() {
@@ -47,7 +59,10 @@ class _ListaPrenotazioniScreenState extends State<ListaPrenotazioniScreen> {
       _giornoSelezionato,
     );
     _prenotazioniPassate = _prenotazioni
-        .where((p) => p.dataOra.isBefore(soglia))
+        .where(
+          (p) =>
+              p.dataOra.isBefore(soglia) || p.dataOra.isAtSameMomentAs(soglia),
+        )
         .toList();
     _prenotazionRimanenti = _prenotazioni
         .where((p) => p.dataOra.isAfter(soglia))

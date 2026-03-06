@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tabletable/presentation/screens/lista_fornitori_screen.dart';
 import 'package:tabletable/presentation/screens/dati_screen.dart';
+import 'package:tabletable/presentation/screens/settings.dart';
 import 'package:tabletable/presentation/screens/spese_screen.dart';
 
 import '../widgets/navbar.dart';
@@ -26,7 +27,16 @@ class _HandlerScreenState extends State<HandlerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('TableTable')),
+      appBar: AppBar(
+        title: const Text('TableTable'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            tooltip: 'Impostazioni',
+            onPressed: () => openSettings(context),
+          ),
+        ],
+      ),
       body: _pages[_currentIndex],
       bottomNavigationBar: MyNavbar(
         selectedIndex: _currentIndex,
