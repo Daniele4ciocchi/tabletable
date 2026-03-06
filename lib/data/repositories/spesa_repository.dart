@@ -30,6 +30,7 @@ class SpesaRepository {
               : null,
           alimento: dati['alimento'] as String,
           dettagli: dati['dettagli'] as String? ?? '',
+          prezzo: (dati['prezzo'] as num?)?.toDouble(),
           dataOra: DateTime.parse(dati['dataOra'] as String),
         ),
       );

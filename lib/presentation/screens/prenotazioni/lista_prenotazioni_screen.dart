@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:tabletable/presentation/widgets/upper_banner.dart';
+import 'package:tabletable/presentation/widgets/summary_banner.dart';
 
-import '../../data/models/prenotazione.dart';
-import '../../data/repositories/prenotazioni_repository.dart';
-import '../screens/mostra_prenotazione_screen.dart';
-import '../widgets/day_selector.dart';
-import '../widgets/prenotazioni_list.dart';
+import '../../../data/models/prenotazione.dart';
+import '../../../data/repositories/prenotazioni_repository.dart';
+import 'mostra_prenotazione_screen.dart';
+import '../../widgets/day_selector.dart';
+import '../../widgets/prenotazioni_list.dart';
 import 'aggiungi_prenotazione_screen.dart';
 
 class ListaPrenotazioniScreen extends StatefulWidget {
@@ -74,6 +74,11 @@ class _ListaPrenotazioniScreenState extends State<ListaPrenotazioniScreen> {
     _ricarica();
   }
 
+  Future<void> _creaRimpiazzo(Prenotazione nuova) async {
+    await PrenotazioniRepository.instance.create(nuova);
+    _ricarica();
+  }
+
   Future<void> _modifica(Prenotazione p) async {
     final modificata = await apriSchermataModificaPrenotazione(context, p);
     if (modificata != null) {
@@ -117,7 +122,7 @@ class _ListaPrenotazioniScreenState extends State<ListaPrenotazioniScreen> {
             sliver: SliverToBoxAdapter(
               child: Column(
                 children: [
-                  UpperBanner(
+                  SummaryBanner(
                     icon: Icons.notes_outlined,
                     title: '${_prenotazioni.length} prenotazioni',
                     subtitle: 'Prenotazioni registrate',
@@ -151,6 +156,7 @@ class _ListaPrenotazioniScreenState extends State<ListaPrenotazioniScreen> {
                       onModifica: _modifica,
                       onTap: _apriDettagli,
                       onEliminaById: (id) => _elimina(id),
+                      onRimpiazza: _creaRimpiazzo,
                     ),
                     const SizedBox(height: 16),
                     if (_prenotazioniPassate.isNotEmpty) ...[
@@ -167,6 +173,7 @@ class _ListaPrenotazioniScreenState extends State<ListaPrenotazioniScreen> {
                         onModifica: _modifica,
                         onTap: _apriDettagli,
                         onEliminaById: (id) => _elimina(id),
+                        onRimpiazza: _creaRimpiazzo,
                       ),
                     ],
                   ] else ...[
@@ -176,6 +183,7 @@ class _ListaPrenotazioniScreenState extends State<ListaPrenotazioniScreen> {
                       onModifica: _modifica,
                       onTap: _apriDettagli,
                       onEliminaById: (id) => _elimina(id),
+                      onRimpiazza: _creaRimpiazzo,
                     ),
                   ],
                 ],

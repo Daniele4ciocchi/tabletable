@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class UpperBanner extends StatelessWidget {
+class SummaryBanner extends StatelessWidget {
   final IconData icon;
   final String title;
   final String subtitle;
 
-  const UpperBanner({
+  const SummaryBanner({
     super.key,
     required this.icon,
     required this.title,

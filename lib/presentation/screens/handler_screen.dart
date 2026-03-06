@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:tabletable/presentation/screens/lista_fornitori_screen.dart';
-import 'package:tabletable/presentation/screens/dati_screen.dart';
-import 'package:tabletable/presentation/screens/settings.dart';
-import 'package:tabletable/presentation/screens/spese_screen.dart';
+import 'package:tabletable/presentation/screens/fornitori/lista_fornitori_screen.dart';
+import 'package:tabletable/presentation/screens/home/dati_screen.dart';
+import 'package:tabletable/presentation/screens/settings/settings.dart';
+import 'package:tabletable/presentation/screens/spese/spese_screen.dart';
 
 import '../widgets/navbar.dart';
-import 'lista_prenotazioni_screen.dart';
+import 'prenotazioni/lista_prenotazioni_screen.dart';
 
 class HandlerScreen extends StatefulWidget {
   const HandlerScreen({super.key});

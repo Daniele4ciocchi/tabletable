@@ -3,10 +3,10 @@ import 'package:tabletable/data/models/fornitore.dart';
 import 'package:tabletable/data/models/spesa.dart';
 import 'package:tabletable/data/repositories/fornitori_repository.dart';
 import 'package:tabletable/data/repositories/spesa_repository.dart';
-import 'package:tabletable/presentation/screens/aggiungi_fornitore.dart';
+import 'aggiungi_fornitore_screen.dart';
 import 'package:tabletable/presentation/widgets/dialog_spesa.dart';
 
-import '../widgets/info_row.dart';
+import '../../widgets/info_row.dart';
 
 class FornitoreScreen extends StatefulWidget {
   const FornitoreScreen({super.key, required this.fornitore});
@@ -41,6 +41,7 @@ class _FornitoreScreenState extends State<FornitoreScreen> {
       fornitore: widget.fornitore,
       alimento: risultato.alimento,
       dettagli: risultato.dettagli,
+      prezzo: risultato.prezzo,
       dataOra: risultato.dataOra,
     );
     if (spesa == null) {

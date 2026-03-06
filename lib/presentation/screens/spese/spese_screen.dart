@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tabletable/data/models/spesa.dart';
 import 'package:tabletable/data/repositories/spesa_repository.dart';
-import 'package:tabletable/presentation/widgets/upper_banner.dart';
+import 'package:tabletable/presentation/widgets/custom_bottom_scheet.dart';
+import 'package:tabletable/presentation/widgets/summary_banner.dart';
 
 class SpeseScreen extends StatefulWidget {
   const SpeseScreen({super.key});
@@ -31,7 +32,7 @@ class _SpeseScreenState extends State<SpeseScreen> {
           SliverPadding(
             padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
             sliver: SliverToBoxAdapter(
-              child: UpperBanner(
+              child: SummaryBanner(
                 icon: Icons.receipt_long_outlined,
                 title:
                     '${_spese.length} ${_spese.length == 1 ? "spesa" : "spese"}',
@@ -63,6 +64,40 @@ class _SpeseScreenState extends State<SpeseScreen> {
                       '${s.dataOra.day.toString().padLeft(2, '0')}/${s.dataOra.month.toString().padLeft(2, '0')}/${s.dataOra.year}',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(24),
+                          ),
+                        ),
+                        builder: (_) => CustomBottomSheet(
+                          title: s.alimento,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (s.prezzo != null)
+                                Text(
+                                  'Prezzo: €${s.prezzo!.toStringAsFixed(2)}',
+                                ),
+                              if (s.fornitore != null)
+                                Text('Fornitore: ${s.fornitore!.nome}'),
+                              Text(
+                                'Data: ${s.dataOra.day.toString().padLeft(2, '0')}/${s.dataOra.month.toString().padLeft(2, '0')}/${s.dataOra.year} ${s.dataOra.hour.toString().padLeft(2, '0')}:${s.dataOra.minute.toString().padLeft(2, '0')}',
+                              ),
+                              if (s.dettagli.isNotEmpty) ...[
+                                const SizedBox(height: 12),
+                                Text('Dettagli:'),
+                                Text(s.dettagli),
+                              ],
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                   );
                 },
               ),

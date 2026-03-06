@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:tabletable/presentation/screens/prenotazioni/aggiungi_prenotazione_screen.dart';
 
 import '../../data/models/prenotazione.dart';
+import '../../utils/date_utils.dart';
 
 class PrenotazioneCard extends StatefulWidget {
   final Prenotazione prenotazione;
   final VoidCallback onTap;
   final VoidCallback onModifica;
+  final ValueChanged<Prenotazione> onRimpiazza;
 
   const PrenotazioneCard({
     super.key,
     required this.prenotazione,
     required this.onTap,
     required this.onModifica,
+    required this.onRimpiazza,
   });
 
   @override
@@ -47,32 +51,64 @@ class _PrenotazioneCardState extends State<PrenotazioneCard> {
               ),
             ],
           ),
-          child: ListTile(
-            leading: SizedBox(
-              width: 120,
-              child: Center(
-                child: Text(
-                  '${widget.prenotazione.dataOra.hour.toString().padLeft(2, '0')}:${widget.prenotazione.dataOra.minute.toString().padLeft(2, '0')}',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: colorScheme.primary,
-                    fontSize: 40,
+          child: Column(
+            children: [
+              ListTile(
+                leading: SizedBox(
+                  width: 120,
+                  child: Center(
+                    child: Text(
+                      '${widget.prenotazione.dataOra.hour.toString().padLeft(2, '0')}:${widget.prenotazione.dataOra.minute.toString().padLeft(2, '0')}',
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        color: colorScheme.primary,
+                        fontSize: 40,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            title: Text(widget.prenotazione.nome),
-            subtitle: Text(
-              '${widget.prenotazione.numeroPersone} persone · ${widget.prenotazione.dataOra.day.toString().padLeft(2, '0')}/${widget.prenotazione.dataOra.month.toString().padLeft(2, '0')}/${widget.prenotazione.dataOra.year}',
-            ),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.edit),
-                  onPressed: widget.onModifica,
+                title: Text(widget.prenotazione.nome),
+                subtitle: Text(
+                  '${widget.prenotazione.numeroPersone} persone · ${formatData(widget.prenotazione.dataOra)}',
                 ),
-              ],
-            ),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CircleAvatar(
+                      child: IconButton(
+                        onPressed: () async {
+                          final nuova =
+                              await apriSchermataRimpiazzaPrenotazione(
+                                context,
+                                widget.prenotazione,
+                              );
+                          if (nuova != null) widget.onRimpiazza(nuova);
+                        },
+                        icon: const Icon(Icons.reply),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    IconButton(
+                      icon: const Icon(Icons.edit),
+                      onPressed: widget.onModifica,
+                    ),
+                  ],
+                ),
+              ),
+              if (widget.prenotazione.rimpiazzo != null)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.reply, size: 20),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Rimpiazza prenotazione ${widget.prenotazione.rimpiazzo!.dataOra.hour.toString().padLeft(2, '0')}:${widget.prenotazione.rimpiazzo!.dataOra.minute.toString().padLeft(2, '0')} di ${widget.prenotazione.rimpiazzo!.nome}',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ],
+                  ),
+                ),
+            ],
           ),
         ),
       ),

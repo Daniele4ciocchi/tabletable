@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../data/models/prenotazione.dart';
+import '../../../data/models/prenotazione.dart';
 
 /// Apre la schermata di aggiunta e restituisce la [Prenotazione] inserita,
 /// oppure `null` se l'utente torna indietro senza confermare.
@@ -30,17 +30,34 @@ Future<Prenotazione?> apriSchermataModificaPrenotazione(
   );
 }
 
+/// Apre la schermata di rimpiazzo e restituisce la [Prenotazione] modificata,
+/// oppure `null` se l'utente torna indietro senza confermare.
+/// forse merita un nome diverso
+Future<Prenotazione?> apriSchermataRimpiazzaPrenotazione(
+  BuildContext context,
+  Prenotazione rimpiazzo,
+) {
+  return Navigator.push<Prenotazione>(
+    context,
+    MaterialPageRoute(
+      builder: (_) => PrenotazioneFormScreen(rimpiazzo: rimpiazzo),
+    ),
+  );
+}
+
 /// Schermata unificata per aggiungere o modificare una prenotazione.
 ///
 /// Se [prenotazione] è `null` si è in modalità aggiunta; altrimenti modifica.
 class PrenotazioneFormScreen extends StatefulWidget {
   final Prenotazione? prenotazione;
+  final Prenotazione? rimpiazzo;
   final DateTime? initialDate;
 
   const PrenotazioneFormScreen({
     super.key,
     this.prenotazione,
     this.initialDate,
+    this.rimpiazzo,
   });
 
   @override
@@ -95,6 +112,7 @@ class _PrenotazioneFormScreenState extends State<PrenotazioneFormScreen> {
         numeroPersone: int.parse(_personeController.text.trim()),
         dettagli: _dettagliController.text.trim(),
         telefono: _telefonoController.text.trim(),
+        rimpiazzo: widget.rimpiazzo,
         dataOra: _dataOra,
       ),
     );

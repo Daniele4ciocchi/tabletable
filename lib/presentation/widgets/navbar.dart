@@ -33,7 +33,7 @@ class MyNavbar extends StatelessWidget {
           icon: Icon(Icons.business_rounded),
           label: 'Fornitori',
         ),
-        BottomNavigationBarItem(icon: Icon(Icons.fastfood), label: 'Cibi'),
+        BottomNavigationBarItem(icon: Icon(Icons.shopping_bag), label: 'Spese'),
       ],
     );
   }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:tabletable/presentation/screens/aggiungi_fornitore.dart';
-import 'package:tabletable/presentation/screens/mostra_fornitore.dart';
+import 'aggiungi_fornitore_screen.dart';
+import 'mostra_fornitore_screen.dart';
 import 'package:tabletable/presentation/widgets/expansible_card.dart';
-import 'package:tabletable/presentation/widgets/upper_banner.dart';
+import 'package:tabletable/presentation/widgets/summary_banner.dart';
 
-import '../../data/models/fornitore.dart';
-import '../../data/repositories/fornitori_repository.dart';
+import '../../../data/models/fornitore.dart';
+import '../../../data/repositories/fornitori_repository.dart';
 
 class FornitoriScreen extends StatefulWidget {
   const FornitoriScreen({super.key});
@@ -59,7 +59,7 @@ class _FornitoriScreenState extends State<FornitoriScreen> {
             sliver: SliverToBoxAdapter(
               child: Column(
                 children: [
-                  UpperBanner(
+                  SummaryBanner(
                     icon: Icons.store_rounded,
                     title:
                         '${_fornitori.length} ${_fornitori.length == 1 ? "fornitore" : "fornitori"}',

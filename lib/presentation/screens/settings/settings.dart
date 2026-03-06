@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tabletable/data/models/prenotazione.dart';
-import 'package:tabletable/presentation/widgets/prenotazione_card.dart';
 
-import '../../utils/app_settings.dart';
+import '../../../core/app_settings.dart';
 
 void openSettings(BuildContext context) {
   Navigator.push(
@@ -118,7 +116,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 title: const Text('Coperti massimi'),
                 subtitle: const Text('Imposta il limite di persone'),
-                trailing: Text(Prenotazione.copertiTotali.toString()),
+                trailing: ValueListenableBuilder<int>(
+                  valueListenable: AppSettings.copertiTotali,
+                  builder: (_, val, __) => Text(val.toString()),
+                ),
                 onTap: () {
                   int? tempCoperti;
                   showDialog(
@@ -127,7 +128,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       title: const Text('Imposta coperti massimi'),
                       content: TextField(
                         controller: TextEditingController(
-                          text: Prenotazione.copertiTotali.toString(),
+                          text: AppSettings.copertiTotali.value.toString(),
                         ),
                         keyboardType: TextInputType.number,
                         onChanged: (value) {
@@ -146,7 +147,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         TextButton(
                           onPressed: () {
                             if (tempCoperti != null) {
-                              Prenotazione.copertiTotali = tempCoperti!;
+                              AppSettings.copertiTotali.value = tempCoperti!;
                               setState(() {});
                             }
                             Navigator.of(context).pop();

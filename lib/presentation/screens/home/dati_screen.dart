@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tabletable/presentation/widgets/info_card.dart';
 
-import '../../data/models/prenotazione.dart';
-import '../../data/repositories/prenotazioni_repository.dart';
+import '../../../core/app_settings.dart';
+import '../../../data/models/prenotazione.dart';
+import '../../../data/repositories/prenotazioni_repository.dart';
 
 class DatiScreen extends StatefulWidget {
   const DatiScreen({super.key});
@@ -48,7 +49,7 @@ class _DatiScreenState extends State<DatiScreen> {
                 children: [
                   Expanded(
                     child: InfoCard(
-                      icon: Icons.event_note,
+                      icon: Icons.notes,
                       title: 'Prenotazioni oggi',
                       value: _prenotazioni.length.toString(),
                     ),
@@ -70,24 +71,30 @@ class _DatiScreenState extends State<DatiScreen> {
               Row(
                 children: [
                   Expanded(
-                    child: InfoCard(
-                      icon: Icons.event_busy,
-                      title: 'Posti rimanenti',
-                      value:
-                          (Prenotazione.copertiTotali -
-                                  _prenotazioni.fold(
-                                    0,
-                                    (sum, p) => sum + p.numeroPersone,
-                                  ))
-                              .toString(),
+                    child: ValueListenableBuilder<int>(
+                      valueListenable: AppSettings.copertiTotali,
+                      builder: (_, coperti, __) => InfoCard(
+                        icon: Icons.event_busy,
+                        title: 'Posti rimanenti',
+                        value:
+                            (coperti -
+                                    _prenotazioni.fold(
+                                      0,
+                                      (sum, p) => sum + p.numeroPersone,
+                                    ))
+                                .toString(),
+                      ),
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
-                    child: InfoCard(
-                      icon: Icons.chair,
-                      title: 'Posti totali',
-                      value: Prenotazione.copertiTotali.toString(),
+                    child: ValueListenableBuilder<int>(
+                      valueListenable: AppSettings.copertiTotali,
+                      builder: (_, coperti, __) => InfoCard(
+                        icon: Icons.chair,
+                        title: 'Posti totali',
+                        value: coperti.toString(),
+                      ),
                     ),
                   ),
                 ],

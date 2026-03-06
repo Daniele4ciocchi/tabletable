@@ -11,6 +11,7 @@ class PrenotazioniList extends StatelessWidget {
   final PrenotazioneCallback onModifica;
   final PrenotazioneCallback onTap;
   final ValueChanged<int> onEliminaById;
+  final PrenotazioneCallback onRimpiazza;
 
   const PrenotazioniList({
     super.key,
@@ -19,6 +20,7 @@ class PrenotazioniList extends StatelessWidget {
     required this.onModifica,
     required this.onTap,
     required this.onEliminaById,
+    required this.onRimpiazza,
   });
 
   @override
@@ -45,6 +47,7 @@ class PrenotazioniList extends StatelessWidget {
                     prenotazione: p,
                     onModifica: () => onModifica(p),
                     onTap: () => onTap(p),
+                    onRimpiazza: onRimpiazza,
                   );
                 },
               ),

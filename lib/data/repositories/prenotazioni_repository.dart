@@ -19,6 +19,7 @@ class PrenotazioniRepository {
   List<Prenotazione> readAll() {
     final prenotazioni = <Prenotazione>[];
 
+    // Primo passaggio: carica tutte le prenotazioni senza rimpiazzo
     for (final id in _box!.keys.cast<int>()) {
       final dati = Map<String, dynamic>.from(_box!.get(id)!);
       prenotazioni.add(
@@ -31,6 +32,17 @@ class PrenotazioniRepository {
           dataOra: DateTime.parse(dati['dataOra'] as String),
         ),
       );
+    }
+
+    // Secondo passaggio: collega rimpiazzo per ID
+    for (final p in prenotazioni) {
+      final dati = Map<String, dynamic>.from(_box!.get(p.id)!);
+      final rimpiazzoId = dati['rimpiazzoId'];
+      if (rimpiazzoId != null) {
+        p.rimpiazzo = prenotazioni
+            .where((r) => r.id == (rimpiazzoId as int))
+            .firstOrNull;
+      }
     }
 
     prenotazioni.sort((a, b) => a.dataOra.compareTo(b.dataOra));

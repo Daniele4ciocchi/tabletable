@@ -1,11 +1,10 @@
 class Prenotazione {
-  static int _copertiTotali = 20;
-
   int? id;
   String nome;
   int numeroPersone;
   String dettagli;
   String telefono;
+  Prenotazione? rimpiazzo;
   DateTime dataOra;
 
   Prenotazione({
@@ -14,6 +13,7 @@ class Prenotazione {
     required this.numeroPersone,
     this.dettagli = '',
     this.telefono = '',
+    this.rimpiazzo,
     required this.dataOra,
   });
 
@@ -23,11 +23,6 @@ class Prenotazione {
     'dettagli': dettagli,
     'telefono': telefono,
     'dataOra': dataOra.toIso8601String(),
+    'rimpiazzoId': rimpiazzo?.id,
   };
-
-  static set copertiTotali(int value) {
-    _copertiTotali = value;
-  }
-
-  static get copertiTotali => _copertiTotali;
 }

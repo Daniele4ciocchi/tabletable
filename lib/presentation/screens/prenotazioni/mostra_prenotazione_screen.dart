@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:tabletable/presentation/widgets/prenotazione_card.dart';
 
-import '../../data/models/prenotazione.dart';
-import '../../data/repositories/prenotazioni_repository.dart';
-import '../../utils/date_utils.dart';
-import '../widgets/info_row.dart';
+import '../../../data/models/prenotazione.dart';
+import '../../../data/repositories/prenotazioni_repository.dart';
+import '../../../utils/date_utils.dart';
+import '../../widgets/info_row.dart';
 import 'aggiungi_prenotazione_screen.dart';
 
 class PrenotazioneScreen extends StatelessWidget {
@@ -111,6 +112,17 @@ class PrenotazioneScreen extends StatelessWidget {
                 ],
               ),
             ),
+            if (prenotazione.rimpiazzo != null) ...[
+              const Divider(height: 32),
+              const Text("Questa prenotazione rimpiazza"),
+              const SizedBox(height: 28),
+              PrenotazioneCard(
+                prenotazione: prenotazione.rimpiazzo!,
+                onTap: () {},
+                onModifica: () {},
+                onRimpiazza: (_) {},
+              ),
+            ],
           ],
         ),
       ),
@@ -128,4 +140,6 @@ class PrenotazioneScreen extends StatelessWidget {
       ),
     );
   }
+
+  prenotazioneCard() {}
 }
