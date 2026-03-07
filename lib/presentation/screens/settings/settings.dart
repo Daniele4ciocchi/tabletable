@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/app_settings.dart';
+import '../../../l10n/app_localizations.dart';
 
 void openSettings(BuildContext context) {
   Navigator.push(
@@ -33,10 +34,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
   ];
 
   void _apriColorPicker(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Colore primario'),
+        title: Text(l10n.settingsPrimaryColorPickerTitle),
         content: SizedBox(
           width: 280,
           child: ValueListenableBuilder<Color>(
@@ -45,7 +47,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               spacing: 12,
               runSpacing: 12,
               children: _colori.map((color) {
-                final isSelected = color.value == selectedColor.value;
+                final isSelected = color.toARGB32() == selectedColor.toARGB32();
                 return GestureDetector(
                   onTap: () {
                     AppSettings.seedColor.value = color;
@@ -85,7 +87,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text('Annulla'),
+            child: Text(l10n.settingsCancel),
           ),
         ],
       ),
@@ -95,18 +97,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: colors.surfaceContainerLow,
       appBar: AppBar(
-        title: const Text('Impostazioni'),
+        title: Text(l10n.settingsTitle),
         backgroundColor: colors.surfaceContainerLow,
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         children: [
           // ── Sezione: Generali ──
-          _SectionHeader('GENERALI'),
+          _SectionHeader(l10n.settingsSectionGeneral),
           _SettingsCard(
             children: [
               ListTile(
@@ -114,8 +117,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Icons.table_restaurant_outlined,
                   color: colors.primary,
                 ),
-                title: const Text('Coperti massimi'),
-                subtitle: const Text('Imposta il limite di persone'),
+                title: Text(l10n.settingsMaxSeats),
+                subtitle: Text(l10n.settingsMaxSeatsSubtitle),
                 trailing: ValueListenableBuilder<int>(
                   valueListenable: AppSettings.copertiTotali,
                   builder: (_, val, __) => Text(val.toString()),
@@ -125,7 +128,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                      title: const Text('Imposta coperti massimi'),
+                      title: Text(l10n.settingsSetMaxSeatsTitle),
                       content: TextField(
                         controller: TextEditingController(
                           text: AppSettings.copertiTotali.value.toString(),
@@ -136,13 +139,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         },
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
-                          labelText: 'Coperti massimi',
+                          labelText: l10n.settingsMaxSeats,
                         ),
                       ),
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.of(context).pop(),
-                          child: const Text('Chiudi'),
+                          child: Text(l10n.settingsClose),
                         ),
                         TextButton(
                           onPressed: () {
@@ -152,7 +155,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             }
                             Navigator.of(context).pop();
                           },
-                          child: const Text('Salva'),
+                          child: Text(l10n.settingsSave),
                         ),
                       ],
                     ),
@@ -161,9 +164,48 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               const Divider(height: 1, indent: 16, endIndent: 16),
               ListTile(
+                leading: Icon(Icons.language_outlined, color: colors.primary),
+                title: Text(l10n.settingsLanguage),
+                subtitle: Text(l10n.settingsLanguageSubtitle),
+                trailing: ValueListenableBuilder<Locale?>(
+                  valueListenable: AppSettings.locale,
+                  builder: (_, locale, __) {
+                    final languageCode = locale?.languageCode ?? 'it';
+                    final label = languageCode == 'en'
+                        ? l10n.settingsLanguageEnglish
+                        : l10n.settingsLanguageItalian;
+                    return PopupMenuButton<String>(
+                      onSelected: (value) {
+                        AppSettings.locale.value = Locale(value);
+                        setState(() {});
+                      },
+                      itemBuilder: (context) => [
+                        PopupMenuItem<String>(
+                          value: 'it',
+                          child: Text(l10n.settingsLanguageItalian),
+                        ),
+                        PopupMenuItem<String>(
+                          value: 'en',
+                          child: Text(l10n.settingsLanguageEnglish),
+                        ),
+                      ],
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(label),
+                          const SizedBox(width: 4),
+                          const Icon(Icons.arrow_drop_down),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+              const Divider(height: 1, indent: 16, endIndent: 16),
+              ListTile(
                 leading: Icon(Icons.palette_outlined, color: colors.primary),
-                title: const Text('Colore primario'),
-                subtitle: const Text('Scegli il colore dell\'app'),
+                title: Text(l10n.settingsPrimaryColor),
+                subtitle: Text(l10n.settingsPrimaryColorSubtitle),
                 trailing: ValueListenableBuilder<Color>(
                   valueListenable: AppSettings.seedColor,
                   builder: (_, color, __) =>
@@ -177,27 +219,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const SizedBox(height: 16),
 
           // ── Sezione: App ──
-          _SectionHeader('APP'),
+          _SectionHeader(l10n.settingsSectionApp),
           _SettingsCard(
             children: [
               ListTile(
                 leading: Icon(Icons.info_outline, color: colors.primary),
-                title: const Text('Informazioni'),
-                subtitle: const Text('Versione 1.0.0'),
+                title: Text(l10n.settingsInfo),
+                subtitle: Text(l10n.settingsVersion('1.0.0')),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () => showAboutDialog(
                   context: context,
-                  applicationName: 'TableTable',
+                  applicationName: l10n.appTitle,
                   applicationVersion: '1.0.0',
                   applicationIcon: const Icon(
                     Icons.table_restaurant_outlined,
                     size: 48,
                   ),
-                  applicationLegalese:
-                      '© 2026 TableTable \n '
-                      'Sviluppata da Daniele e alcuni modelli di intelligenza artificiale\n'
-                      'se funziona male non è colpa mia :)\n'
-                      'recensitemi\n',
+                  applicationLegalese: l10n.aboutLegalese,
                 ),
               ),
             ],

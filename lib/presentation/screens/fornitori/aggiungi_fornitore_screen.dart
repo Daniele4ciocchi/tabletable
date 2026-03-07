@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tabletable/data/models/fornitore.dart';
+import 'package:tabletable/l10n/app_localizations.dart';
 
 /// Apre la schermata di aggiunta e restituisce la [Fornitore] inserita,
 /// oppure `null` se l'utente torna indietro senza confermare.
@@ -75,9 +76,10 @@ class _FornitoreFormScreenState extends State<FornitoreFormScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: Text(_isModifica ? 'Modifica fornitore' : 'Nuovo fornitore'),
+        title: Text(_isModifica ? l10n.supplierFormEdit : l10n.supplierFormNew),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -88,19 +90,19 @@ class _FornitoreFormScreenState extends State<FornitoreFormScreen> {
               TextFormField(
                 controller: _nomeController,
                 textCapitalization: TextCapitalization.words,
-                decoration: const InputDecoration(
-                  labelText: 'Nome',
+                decoration: InputDecoration(
+                  labelText: l10n.commonName,
                   border: OutlineInputBorder(),
                 ),
                 validator: (v) => (v == null || v.trim().isEmpty)
-                    ? 'Inserisci un nome'
+                    ? l10n.supplierNameRequired
                     : null,
               ),
               const SizedBox(height: 16),
               TextFormField(
                 controller: _descrizioneController,
-                decoration: const InputDecoration(
-                  labelText: 'Descrizione',
+                decoration: InputDecoration(
+                  labelText: l10n.commonDescription,
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.text,
@@ -108,8 +110,8 @@ class _FornitoreFormScreenState extends State<FornitoreFormScreen> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _telefonoController,
-                decoration: const InputDecoration(
-                  labelText: 'Telefono',
+                decoration: InputDecoration(
+                  labelText: l10n.commonPhone,
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.phone,
@@ -121,7 +123,7 @@ class _FornitoreFormScreenState extends State<FornitoreFormScreen> {
                   minimumSize: const Size.fromHeight(48),
                 ),
                 onPressed: _conferma,
-                child: Text(_isModifica ? 'Salva' : 'Aggiungi'),
+                child: Text(_isModifica ? l10n.commonSave : l10n.commonAdd),
               ),
             ],
           ),

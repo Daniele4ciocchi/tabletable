@@ -3,6 +3,7 @@ import 'package:tabletable/data/models/fornitore.dart';
 import 'package:tabletable/data/models/spesa.dart';
 import 'package:tabletable/data/repositories/fornitori_repository.dart';
 import 'package:tabletable/data/repositories/spesa_repository.dart';
+import 'package:tabletable/l10n/app_localizations.dart';
 import 'aggiungi_fornitore_screen.dart';
 import 'package:tabletable/presentation/widgets/dialog_spesa.dart';
 
@@ -57,30 +58,29 @@ class _FornitoreScreenState extends State<FornitoreScreen> {
     final fornitore = widget.fornitore;
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Fornitore'),
+        title: Text(l10n.supplierScreenTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.delete_outline),
-            tooltip: 'Elimina',
+            tooltip: l10n.commonDelete,
             onPressed: () async {
               final conferma = await showDialog<bool>(
                 context: context,
                 builder: (ctx) => AlertDialog(
-                  title: const Text('Elimina fornitore'),
-                  content: Text(
-                    'Vuoi eliminare il fornitore ${fornitore.nome}?',
-                  ),
+                  title: Text(l10n.supplierDeleteTitle),
+                  content: Text(l10n.supplierDeletePrompt(fornitore.nome)),
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.of(ctx).pop(false),
-                      child: const Text('Annulla'),
+                      child: Text(l10n.commonCancel),
                     ),
                     TextButton(
                       onPressed: () => Navigator.of(ctx).pop(true),
-                      child: const Text('Elimina'),
+                      child: Text(l10n.commonDelete),
                     ),
                   ],
                 ),
@@ -92,28 +92,27 @@ class _FornitoreScreenState extends State<FornitoreScreen> {
           ),
           IconButton(
             icon: const Icon(Icons.edit_outlined),
-            tooltip: 'Modifica',
+            tooltip: l10n.commonEdit,
             onPressed: () async {
               final conferma = await showDialog<bool>(
                 context: context,
                 builder: (ctx) => AlertDialog(
-                  title: const Text('Modifica fornitore'),
-                  content: Text(
-                    'Vuoi modificare il fornitore ${fornitore.nome}?',
-                  ),
+                  title: Text(l10n.supplierEditTitle),
+                  content: Text(l10n.supplierEditPrompt(fornitore.nome)),
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.of(ctx).pop(false),
-                      child: const Text('Annulla'),
+                      child: Text(l10n.commonCancel),
                     ),
                     TextButton(
                       onPressed: () => Navigator.of(ctx).pop(true),
-                      child: const Text('Modifica'),
+                      child: Text(l10n.commonEdit),
                     ),
                   ],
                 ),
               );
               if (conferma != true) return;
+              if (!context.mounted) return;
               final modificata = await apriSchermataModificaFornitore(
                 context,
                 fornitore,
@@ -159,7 +158,7 @@ class _FornitoreScreenState extends State<FornitoreScreen> {
                   if (fornitore.descrizione.isNotEmpty) ...[
                     InfoRow(
                       icon: Icons.notes_outlined,
-                      label: 'Descrizione',
+                      label: l10n.commonDescription,
                       value: fornitore.descrizione,
                     ),
                   ],
@@ -167,7 +166,7 @@ class _FornitoreScreenState extends State<FornitoreScreen> {
                     const Divider(indent: 56, endIndent: 16, height: 1),
                     InfoRow(
                       icon: Icons.phone_outlined,
-                      label: 'Telefono',
+                      label: l10n.commonPhone,
                       value: fornitore.telefono,
                     ),
                   ],
@@ -176,9 +175,9 @@ class _FornitoreScreenState extends State<FornitoreScreen> {
             ),
             const Divider(height: 32),
             if (_spese.isEmpty)
-              const Padding(
-                padding: EdgeInsets.all(16),
-                child: Center(child: Text('Nessuna spesa registrata')),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Center(child: Text(l10n.supplierNoneExpenses)),
               )
             else
               ListView.builder(
@@ -213,7 +212,7 @@ class _FornitoreScreenState extends State<FornitoreScreen> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _apriDialogSpesa(),
         icon: const Icon(Icons.add_rounded),
-        label: const Text('Aggiungi spesa'),
+        label: Text(l10n.supplierAddExpense),
       ),
     );
   }

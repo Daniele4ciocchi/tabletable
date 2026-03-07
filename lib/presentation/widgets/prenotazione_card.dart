@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabletable/l10n/app_localizations.dart';
 import 'package:tabletable/presentation/screens/prenotazioni/aggiungi_prenotazione_screen.dart';
 
 import '../../data/models/prenotazione.dart';
@@ -28,6 +29,7 @@ class _PrenotazioneCardState extends State<PrenotazioneCard> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return MouseRegion(
       onEnter: (_) => setState(() => _hovered = true),
@@ -68,7 +70,7 @@ class _PrenotazioneCardState extends State<PrenotazioneCard> {
                 ),
                 title: Text(widget.prenotazione.nome),
                 subtitle: Text(
-                  '${widget.prenotazione.numeroPersone} persone · ${formatData(widget.prenotazione.dataOra)}',
+                  '${widget.prenotazione.numeroPersone} ${l10n.reservationPeople.toLowerCase()} · ${formatData(widget.prenotazione.dataOra)}',
                 ),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -102,7 +104,10 @@ class _PrenotazioneCardState extends State<PrenotazioneCard> {
                       const Icon(Icons.reply, size: 20),
                       const SizedBox(width: 8),
                       Text(
-                        'Rimpiazza prenotazione ${widget.prenotazione.rimpiazzo!.dataOra.hour.toString().padLeft(2, '0')}:${widget.prenotazione.rimpiazzo!.dataOra.minute.toString().padLeft(2, '0')} di ${widget.prenotazione.rimpiazzo!.nome}',
+                        l10n.reservationReplaceSummary(
+                          '${widget.prenotazione.rimpiazzo!.dataOra.hour.toString().padLeft(2, '0')}:${widget.prenotazione.rimpiazzo!.dataOra.minute.toString().padLeft(2, '0')}',
+                          widget.prenotazione.rimpiazzo!.nome,
+                        ),
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ],

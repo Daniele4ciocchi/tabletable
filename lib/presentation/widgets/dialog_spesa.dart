@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tabletable/data/models/spesa.dart';
+import 'package:tabletable/l10n/app_localizations.dart';
 
 /// Mostra un dialog per aggiungere o modificare una [Spesa].
 /// Restituisce la [Spesa] compilata, oppure `null` se annullato.
@@ -65,8 +66,9 @@ class _DialogSpesaState extends State<_DialogSpesa> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
-      title: Text(_isModifica ? 'Modifica spesa' : 'Nuova spesa'),
+      title: Text(_isModifica ? l10n.expenseDialogEdit : l10n.expenseDialogNew),
       content: Form(
         key: _formKey,
         child: Column(
@@ -75,19 +77,19 @@ class _DialogSpesaState extends State<_DialogSpesa> {
             TextFormField(
               controller: _alimentoController,
               textCapitalization: TextCapitalization.sentences,
-              decoration: const InputDecoration(
-                labelText: 'Alimento',
+              decoration: InputDecoration(
+                labelText: l10n.expenseFood,
                 border: OutlineInputBorder(),
               ),
               validator: (v) =>
-                  (v == null || v.trim().isEmpty) ? 'Campo obbligatorio' : null,
+                  (v == null || v.trim().isEmpty) ? l10n.expenseRequired : null,
             ),
             const SizedBox(height: 12),
             TextFormField(
               controller: _dettagliController,
               textCapitalization: TextCapitalization.sentences,
-              decoration: const InputDecoration(
-                labelText: 'Dettagli (opzionale)',
+              decoration: InputDecoration(
+                labelText: l10n.expenseDetailsOptional,
                 border: OutlineInputBorder(),
               ),
             ),
@@ -95,14 +97,14 @@ class _DialogSpesaState extends State<_DialogSpesa> {
             TextFormField(
               controller: _prezzoController,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
-              decoration: const InputDecoration(
-                labelText: 'Prezzo (opzionale)',
+              decoration: InputDecoration(
+                labelText: l10n.expensePriceOptional,
                 border: OutlineInputBorder(),
               ),
               validator: (v) {
                 if (v == null || v.trim().isEmpty) return null;
                 return double.tryParse(v.trim()) == null
-                    ? 'Inserisci un valore numerico valido'
+                    ? l10n.expensePriceInvalid
                     : null;
               },
             ),
@@ -112,11 +114,11 @@ class _DialogSpesaState extends State<_DialogSpesa> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annulla'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           onPressed: _conferma,
-          child: Text(_isModifica ? 'Salva' : 'Aggiungi'),
+          child: Text(_isModifica ? l10n.commonSave : l10n.commonAdd),
         ),
       ],
     );

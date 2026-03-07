@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tabletable/data/models/spesa.dart';
 import 'package:tabletable/data/repositories/spesa_repository.dart';
+import 'package:tabletable/l10n/app_localizations.dart';
 import 'package:tabletable/presentation/widgets/custom_bottom_scheet.dart';
 import 'package:tabletable/presentation/widgets/summary_banner.dart';
 
@@ -26,6 +27,7 @@ class _SpeseScreenState extends State<SpeseScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -34,16 +36,13 @@ class _SpeseScreenState extends State<SpeseScreen> {
             sliver: SliverToBoxAdapter(
               child: SummaryBanner(
                 icon: Icons.receipt_long_outlined,
-                title:
-                    '${_spese.length} ${_spese.length == 1 ? "spesa" : "spese"}',
-                subtitle: 'Tutte le spese registrate',
+                title: l10n.expensesCount(_spese.length),
+                subtitle: l10n.expensesRegistered,
               ),
             ),
           ),
           if (_spese.isEmpty)
-            const SliverFillRemaining(
-              child: Center(child: Text('Nessuna spesa registrata')),
-            )
+            SliverFillRemaining(child: Center(child: Text(l10n.expensesNone)))
           else
             SliverPadding(
               padding: const EdgeInsets.fromLTRB(8, 8, 8, 16),
@@ -81,16 +80,20 @@ class _SpeseScreenState extends State<SpeseScreen> {
                             children: [
                               if (s.prezzo != null)
                                 Text(
-                                  'Prezzo: €${s.prezzo!.toStringAsFixed(2)}',
+                                  l10n.expensePrice(
+                                    s.prezzo!.toStringAsFixed(2),
+                                  ),
                                 ),
                               if (s.fornitore != null)
-                                Text('Fornitore: ${s.fornitore!.nome}'),
+                                Text(l10n.expenseSupplier(s.fornitore!.nome)),
                               Text(
-                                'Data: ${s.dataOra.day.toString().padLeft(2, '0')}/${s.dataOra.month.toString().padLeft(2, '0')}/${s.dataOra.year} ${s.dataOra.hour.toString().padLeft(2, '0')}:${s.dataOra.minute.toString().padLeft(2, '0')}',
+                                l10n.expenseDateTime(
+                                  '${s.dataOra.day.toString().padLeft(2, '0')}/${s.dataOra.month.toString().padLeft(2, '0')}/${s.dataOra.year} ${s.dataOra.hour.toString().padLeft(2, '0')}:${s.dataOra.minute.toString().padLeft(2, '0')}',
+                                ),
                               ),
                               if (s.dettagli.isNotEmpty) ...[
                                 const SizedBox(height: 12),
-                                Text('Dettagli:'),
+                                Text('${l10n.commonDetails}:'),
                                 Text(s.dettagli),
                               ],
                             ],

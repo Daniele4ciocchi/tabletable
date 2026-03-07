@@ -1,0 +1,165 @@
+{
+  "@@locale": "it",
+  "appTitle": "TableTable",
+  "settingsTooltip": "Impostazioni",
+  "navHome": "Home",
+  "navReservations": "Prenotazioni",
+  "navSuppliers": "Fornitori",
+  "navExpenses": "Spese",
+  "homeTodayData": "Dati di oggi",
+  "homeReservationsToday": "Prenotazioni oggi",
+  "homeTotalPeople": "Persone totali",
+  "homeRemainingSeats": "Posti rimanenti",
+  "homeTotalSeats": "Posti totali",
+  "settingsTitle": "Impostazioni",
+  "settingsSectionGeneral": "GENERALI",
+  "settingsSectionApp": "APP",
+  "settingsLanguage": "Lingua",
+  "settingsLanguageSubtitle": "Scegli la lingua dell'app",
+  "settingsLanguageItalian": "Italiano",
+  "settingsLanguageEnglish": "Inglese",
+  "settingsPrimaryColor": "Colore primario",
+  "settingsPrimaryColorPickerTitle": "Colore primario",
+  "settingsPrimaryColorSubtitle": "Scegli il colore dell'app",
+  "settingsMaxSeats": "Coperti massimi",
+  "settingsMaxSeatsSubtitle": "Imposta il limite di persone",
+  "settingsSetMaxSeatsTitle": "Imposta coperti massimi",
+  "settingsClose": "Chiudi",
+  "settingsSave": "Salva",
+  "settingsCancel": "Annulla",
+  "settingsInfo": "Informazioni",
+  "settingsVersion": "Versione {version}",
+  "@settingsVersion": {
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "suppliersCount": "{count, plural, =0{0 fornitori} =1{1 fornitore} other{{count} fornitori}}",
+  "@suppliersCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "suppliersSubtitle": "Segna cosa e dove compri qui",
+  "suppliersAdd": "Aggiungi fornitore",
+  "supplierScreenTitle": "Fornitore",
+  "supplierDeleteTitle": "Elimina fornitore",
+  "supplierDeletePrompt": "Vuoi eliminare il fornitore {name}?",
+  "@supplierDeletePrompt": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "supplierEditTitle": "Modifica fornitore",
+  "supplierEditPrompt": "Vuoi modificare il fornitore {name}?",
+  "@supplierEditPrompt": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "supplierFormNew": "Nuovo fornitore",
+  "supplierFormEdit": "Modifica fornitore",
+  "supplierNameRequired": "Inserisci un nome",
+  "supplierNoneExpenses": "Nessuna spesa registrata",
+  "supplierAddExpense": "Aggiungi spesa",
+  "reservationsCount": "{count} prenotazioni",
+  "@reservationsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reservationsRegistered": "Prenotazioni registrate",
+  "reservationsRemaining": "Prenotazioni rimanenti ({count})",
+  "@reservationsRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reservationsPast": "Prenotazioni passate ({count})",
+  "@reservationsPast": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reservationsTitle": "Prenotazioni",
+  "reservationsAdd": "Aggiungi prenotazione",
+  "reservationNone": "Nessuna prenotazione",
+  "reservationScreenTitle": "Prenotazione",
+  "reservationDeleteTitle": "Elimina prenotazione",
+  "reservationDeletePrompt": "Vuoi eliminare la prenotazione di {name}?",
+  "@reservationDeletePrompt": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "reservationReplacesThis": "Questa prenotazione rimpiazza",
+  "reservationPeople": "Persone",
+  "reservationDateTime": "Data e ora",
+  "reservationFormNew": "Nuova prenotazione",
+  "reservationFormEdit": "Modifica prenotazione",
+  "reservationNameRequired": "Inserisci un nome",
+  "reservationPeopleInvalid": "Inserisci un numero valido",
+  "reservationReplaceSummary": "Rimpiazza prenotazione {time} di {name}",
+  "@reservationReplaceSummary": {
+    "placeholders": {
+      "time": {},
+      "name": {}
+    }
+  },
+  "daySelectorToday": "Oggi",
+  "expensesCount": "{count, plural, =0{0 spese} =1{1 spesa} other{{count} spese}}",
+  "@expensesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "expensesRegistered": "Tutte le spese registrate",
+  "expensesNone": "Nessuna spesa registrata",
+  "expenseDialogNew": "Nuova spesa",
+  "expenseDialogEdit": "Modifica spesa",
+  "expenseFood": "Alimento",
+  "expenseRequired": "Campo obbligatorio",
+  "expenseDetailsOptional": "Dettagli (opzionale)",
+  "expensePriceOptional": "Prezzo (opzionale)",
+  "expensePriceInvalid": "Inserisci un valore numerico valido",
+  "expensePrice": "Prezzo: €{price}",
+  "@expensePrice": {
+    "placeholders": {
+      "price": {}
+    }
+  },
+  "expenseSupplier": "Fornitore: {name}",
+  "@expenseSupplier": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "expenseDateTime": "Data: {dateTime}",
+  "@expenseDateTime": {
+    "placeholders": {
+      "dateTime": {}
+    }
+  },
+  "commonName": "Nome",
+  "commonDescription": "Descrizione",
+  "commonPhone": "Telefono",
+  "commonDetails": "Dettagli",
+  "commonDate": "Data",
+  "commonTime": "Orario",
+  "commonAdd": "Aggiungi",
+  "commonSave": "Salva",
+  "commonEdit": "Modifica",
+  "commonDelete": "Elimina",
+  "commonCancel": "Annulla",
+  "aboutLegalese": "© 2026 TableTable \n Sviluppata da Daniele e alcuni modelli di intelligenza artificiale\nse funziona male non è colpa mia :)\nrecensitemi\n"
+}

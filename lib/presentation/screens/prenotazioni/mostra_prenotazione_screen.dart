@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tabletable/presentation/widgets/prenotazione_card.dart';
+import 'package:tabletable/l10n/app_localizations.dart';
 
 import '../../../data/models/prenotazione.dart';
 import '../../../data/repositories/prenotazioni_repository.dart';
@@ -16,30 +17,31 @@ class PrenotazioneScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Prenotazione'),
+        title: Text(l10n.reservationScreenTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.delete_outline),
-            tooltip: 'Elimina',
+            tooltip: l10n.commonDelete,
             onPressed: () async {
               final conferma = await showDialog<bool>(
                 context: context,
                 builder: (ctx) => AlertDialog(
-                  title: const Text('Elimina prenotazione'),
+                  title: Text(l10n.reservationDeleteTitle),
                   content: Text(
-                    'Vuoi eliminare la prenotazione di ${prenotazione.nome}?',
+                    l10n.reservationDeletePrompt(prenotazione.nome),
                   ),
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.of(ctx).pop(false),
-                      child: const Text('Annulla'),
+                      child: Text(l10n.commonCancel),
                     ),
                     TextButton(
                       onPressed: () => Navigator.of(ctx).pop(true),
-                      child: const Text('Elimina'),
+                      child: Text(l10n.commonDelete),
                     ),
                   ],
                 ),
@@ -84,20 +86,20 @@ class PrenotazioneScreen extends StatelessWidget {
                 children: [
                   InfoRow(
                     icon: Icons.people_outline,
-                    label: 'Persone',
+                    label: l10n.reservationPeople,
                     value: '${prenotazione.numeroPersone}',
                   ),
                   const Divider(indent: 56, endIndent: 16, height: 1),
                   InfoRow(
                     icon: Icons.calendar_today_outlined,
-                    label: 'Data e ora',
+                    label: l10n.reservationDateTime,
                     value: formatDataOra(prenotazione.dataOra),
                   ),
                   if (prenotazione.dettagli.isNotEmpty) ...[
                     const Divider(indent: 56, endIndent: 16, height: 1),
                     InfoRow(
                       icon: Icons.notes_outlined,
-                      label: 'Dettagli',
+                      label: l10n.commonDetails,
                       value: prenotazione.dettagli,
                     ),
                   ],
@@ -105,7 +107,7 @@ class PrenotazioneScreen extends StatelessWidget {
                     const Divider(indent: 56, endIndent: 16, height: 1),
                     InfoRow(
                       icon: Icons.phone_outlined,
-                      label: 'Telefono',
+                      label: l10n.commonPhone,
                       value: prenotazione.telefono,
                     ),
                   ],
@@ -114,7 +116,7 @@ class PrenotazioneScreen extends StatelessWidget {
             ),
             if (prenotazione.rimpiazzo != null) ...[
               const Divider(height: 32),
-              const Text("Questa prenotazione rimpiazza"),
+              Text(l10n.reservationReplacesThis),
               const SizedBox(height: 28),
               PrenotazioneCard(
                 prenotazione: prenotazione.rimpiazzo!,

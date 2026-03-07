@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabletable/l10n/app_localizations.dart';
 
 /// Barra di navigazione inferiore dell'app.
 ///
@@ -17,23 +18,30 @@ class MyNavbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return BottomNavigationBar(
       fixedColor: Theme.of(context).colorScheme.primary,
       elevation: 8,
       type: BottomNavigationBarType.fixed,
       currentIndex: selectedIndex,
       onTap: onTap,
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+      items: [
         BottomNavigationBarItem(
-          icon: Icon(Icons.restaurant),
-          label: 'Prenotazioni',
+          icon: const Icon(Icons.home),
+          label: l10n.navHome,
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.business_rounded),
-          label: 'Fornitori',
+          icon: const Icon(Icons.restaurant),
+          label: l10n.navReservations,
         ),
-        BottomNavigationBarItem(icon: Icon(Icons.shopping_bag), label: 'Spese'),
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.business_rounded),
+          label: l10n.navSuppliers,
+        ),
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.shopping_bag),
+          label: l10n.navExpenses,
+        ),
       ],
     );
   }

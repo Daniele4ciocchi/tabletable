@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabletable/l10n/app_localizations.dart';
 
 class DaySelector extends StatelessWidget {
   final DateTime selectedDate;
@@ -10,16 +11,17 @@ class DaySelector extends StatelessWidget {
     required this.onDateChanged,
   });
 
-  String _label(DateTime d) {
+  String _label(DateTime d, AppLocalizations l10n) {
     final oggi = DateTime.now();
     if (d.year == oggi.year && d.month == oggi.month && d.day == oggi.day) {
-      return 'Oggi';
+      return l10n.daySelectorToday;
     }
     return '${d.day}/${d.month}/${d.year}';
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
       child: Row(
@@ -42,7 +44,7 @@ class DaySelector extends StatelessWidget {
               }
             },
             child: Text(
-              _label(selectedDate),
+              _label(selectedDate, l10n),
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabletable/l10n/app_localizations.dart';
 
 import '../../../data/models/prenotazione.dart';
 
@@ -105,6 +106,8 @@ class _PrenotazioneFormScreenState extends State<PrenotazioneFormScreen> {
 
   void _conferma() {
     if (!_formKey.currentState!.validate()) return;
+    final rimpiazzoSelezionato =
+        widget.rimpiazzo ?? widget.prenotazione?.rimpiazzo;
     Navigator.of(context).pop(
       Prenotazione(
         id: widget.prenotazione?.id,
@@ -112,7 +115,7 @@ class _PrenotazioneFormScreenState extends State<PrenotazioneFormScreen> {
         numeroPersone: int.parse(_personeController.text.trim()),
         dettagli: _dettagliController.text.trim(),
         telefono: _telefonoController.text.trim(),
-        rimpiazzo: widget.rimpiazzo,
+        rimpiazzo: rimpiazzoSelezionato,
         dataOra: _dataOra,
       ),
     );
@@ -132,10 +135,11 @@ class _PrenotazioneFormScreenState extends State<PrenotazioneFormScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          _isModifica ? 'Modifica prenotazione' : 'Nuova prenotazione',
+          _isModifica ? l10n.reservationFormEdit : l10n.reservationFormNew,
         ),
       ),
       body: Padding(
@@ -147,33 +151,35 @@ class _PrenotazioneFormScreenState extends State<PrenotazioneFormScreen> {
               TextFormField(
                 controller: _nomeController,
                 textCapitalization: TextCapitalization.words,
-                decoration: const InputDecoration(
-                  labelText: 'Nome',
+                decoration: InputDecoration(
+                  labelText: l10n.commonName,
                   border: OutlineInputBorder(),
                 ),
                 validator: (v) => (v == null || v.trim().isEmpty)
-                    ? 'Inserisci un nome'
+                    ? l10n.reservationNameRequired
                     : null,
               ),
               const SizedBox(height: 16),
               TextFormField(
                 controller: _personeController,
-                decoration: const InputDecoration(
-                  labelText: 'Numero persone',
+                decoration: InputDecoration(
+                  labelText: l10n.reservationPeople,
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.number,
                 validator: (v) {
                   final n = int.tryParse(v?.trim() ?? '');
-                  if (n == null || n <= 0) return 'Inserisci un numero valido';
+                  if (n == null || n <= 0) {
+                    return l10n.reservationPeopleInvalid;
+                  }
                   return null;
                 },
               ),
               const SizedBox(height: 16),
               TextFormField(
                 controller: _telefonoController,
-                decoration: const InputDecoration(
-                  labelText: 'Telefono',
+                decoration: InputDecoration(
+                  labelText: l10n.commonPhone,
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.phone,
@@ -181,8 +187,8 @@ class _PrenotazioneFormScreenState extends State<PrenotazioneFormScreen> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _dettagliController,
-                decoration: const InputDecoration(
-                  labelText: 'Dettagli',
+                decoration: InputDecoration(
+                  labelText: l10n.commonDetails,
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.text,
@@ -192,7 +198,7 @@ class _PrenotazioneFormScreenState extends State<PrenotazioneFormScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const Text('Data: '),
+                  Text('${l10n.commonDate}: '),
                   TextButton(
                     style: TextButton.styleFrom(
                       backgroundColor: Theme.of(
@@ -224,7 +230,7 @@ class _PrenotazioneFormScreenState extends State<PrenotazioneFormScreen> {
                     ),
                   ),
                   const SizedBox(width: 12),
-                  const Text('Orario: '),
+                  Text('${l10n.commonTime}: '),
                   TextButton(
                     style: TextButton.styleFrom(
                       backgroundColor: Theme.of(
@@ -275,7 +281,7 @@ class _PrenotazioneFormScreenState extends State<PrenotazioneFormScreen> {
                   minimumSize: const Size.fromHeight(48),
                 ),
                 onPressed: _conferma,
-                child: Text(_isModifica ? 'Salva' : 'Aggiungi'),
+                child: Text(_isModifica ? l10n.commonSave : l10n.commonAdd),
               ),
             ],
           ),

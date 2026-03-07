@@ -3,6 +3,7 @@ import 'package:tabletable/presentation/screens/fornitori/lista_fornitori_screen
 import 'package:tabletable/presentation/screens/home/dati_screen.dart';
 import 'package:tabletable/presentation/screens/settings/settings.dart';
 import 'package:tabletable/presentation/screens/spese/spese_screen.dart';
+import 'package:tabletable/l10n/app_localizations.dart';
 
 import '../widgets/navbar.dart';
 import 'prenotazioni/lista_prenotazioni_screen.dart';
@@ -26,13 +27,14 @@ class _HandlerScreenState extends State<HandlerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('TableTable'),
+        title: Text(l10n.appTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
-            tooltip: 'Impostazioni',
+            tooltip: l10n.settingsTooltip,
             onPressed: () => openSettings(context),
           ),
         ],

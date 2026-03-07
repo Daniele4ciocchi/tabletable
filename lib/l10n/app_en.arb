@@ -1,0 +1,165 @@
+{
+  "@@locale": "en",
+  "appTitle": "TableTable",
+  "settingsTooltip": "Settings",
+  "navHome": "Home",
+  "navReservations": "Reservations",
+  "navSuppliers": "Suppliers",
+  "navExpenses": "Expenses",
+  "homeTodayData": "Today's data",
+  "homeReservationsToday": "Today's reservations",
+  "homeTotalPeople": "Total people",
+  "homeRemainingSeats": "Remaining seats",
+  "homeTotalSeats": "Total seats",
+  "settingsTitle": "Settings",
+  "settingsSectionGeneral": "GENERAL",
+  "settingsSectionApp": "APP",
+  "settingsLanguage": "Language",
+  "settingsLanguageSubtitle": "Choose app language",
+  "settingsLanguageItalian": "Italian",
+  "settingsLanguageEnglish": "English",
+  "settingsPrimaryColor": "Primary color",
+  "settingsPrimaryColorPickerTitle": "Primary color",
+  "settingsPrimaryColorSubtitle": "Choose the app color",
+  "settingsMaxSeats": "Maximum seats",
+  "settingsMaxSeatsSubtitle": "Set the people limit",
+  "settingsSetMaxSeatsTitle": "Set maximum seats",
+  "settingsClose": "Close",
+  "settingsSave": "Save",
+  "settingsCancel": "Cancel",
+  "settingsInfo": "Information",
+  "settingsVersion": "Version {version}",
+  "@settingsVersion": {
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "suppliersCount": "{count, plural, =0{0 suppliers} =1{1 supplier} other{{count} suppliers}}",
+  "@suppliersCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "suppliersSubtitle": "Track what and where you buy",
+  "suppliersAdd": "Add supplier",
+  "supplierScreenTitle": "Supplier",
+  "supplierDeleteTitle": "Delete supplier",
+  "supplierDeletePrompt": "Do you want to delete supplier {name}?",
+  "@supplierDeletePrompt": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "supplierEditTitle": "Edit supplier",
+  "supplierEditPrompt": "Do you want to edit supplier {name}?",
+  "@supplierEditPrompt": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "supplierFormNew": "New supplier",
+  "supplierFormEdit": "Edit supplier",
+  "supplierNameRequired": "Enter a name",
+  "supplierNoneExpenses": "No expenses recorded",
+  "supplierAddExpense": "Add expense",
+  "reservationsCount": "{count} reservations",
+  "@reservationsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reservationsRegistered": "Recorded reservations",
+  "reservationsRemaining": "Remaining reservations ({count})",
+  "@reservationsRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reservationsPast": "Past reservations ({count})",
+  "@reservationsPast": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reservationsTitle": "Reservations",
+  "reservationsAdd": "Add reservation",
+  "reservationNone": "No reservations",
+  "reservationScreenTitle": "Reservation",
+  "reservationDeleteTitle": "Delete reservation",
+  "reservationDeletePrompt": "Do you want to delete reservation for {name}?",
+  "@reservationDeletePrompt": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "reservationReplacesThis": "This reservation replaces",
+  "reservationPeople": "People",
+  "reservationDateTime": "Date and time",
+  "reservationFormNew": "New reservation",
+  "reservationFormEdit": "Edit reservation",
+  "reservationNameRequired": "Enter a name",
+  "reservationPeopleInvalid": "Enter a valid number",
+  "reservationReplaceSummary": "Replaces reservation at {time} for {name}",
+  "@reservationReplaceSummary": {
+    "placeholders": {
+      "time": {},
+      "name": {}
+    }
+  },
+  "daySelectorToday": "Today",
+  "expensesCount": "{count, plural, =0{0 expenses} =1{1 expense} other{{count} expenses}}",
+  "@expensesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "expensesRegistered": "All recorded expenses",
+  "expensesNone": "No expenses recorded",
+  "expenseDialogNew": "New expense",
+  "expenseDialogEdit": "Edit expense",
+  "expenseFood": "Food item",
+  "expenseRequired": "Required field",
+  "expenseDetailsOptional": "Details (optional)",
+  "expensePriceOptional": "Price (optional)",
+  "expensePriceInvalid": "Enter a valid numeric value",
+  "expensePrice": "Price: €{price}",
+  "@expensePrice": {
+    "placeholders": {
+      "price": {}
+    }
+  },
+  "expenseSupplier": "Supplier: {name}",
+  "@expenseSupplier": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "expenseDateTime": "Date: {dateTime}",
+  "@expenseDateTime": {
+    "placeholders": {
+      "dateTime": {}
+    }
+  },
+  "commonName": "Name",
+  "commonDescription": "Description",
+  "commonPhone": "Phone",
+  "commonDetails": "Details",
+  "commonDate": "Date",
+  "commonTime": "Time",
+  "commonAdd": "Add",
+  "commonSave": "Save",
+  "commonEdit": "Edit",
+  "commonDelete": "Delete",
+  "commonCancel": "Cancel",
+  "aboutLegalese": "© 2026 TableTable \n Built by Daniele with some AI models\nif something breaks, don't blame me :)\nplease leave a review\n"
+}

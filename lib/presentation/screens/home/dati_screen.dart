@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabletable/l10n/app_localizations.dart';
 import 'package:tabletable/presentation/widgets/info_card.dart';
 
 import '../../../core/app_settings.dart';
@@ -23,6 +24,7 @@ class _DatiScreenState extends State<DatiScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
       body: Center(
@@ -36,7 +38,7 @@ class _DatiScreenState extends State<DatiScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Dati di oggi',
+                    l10n.homeTodayData,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
@@ -50,7 +52,7 @@ class _DatiScreenState extends State<DatiScreen> {
                   Expanded(
                     child: InfoCard(
                       icon: Icons.notes,
-                      title: 'Prenotazioni oggi',
+                      title: l10n.homeReservationsToday,
                       value: _prenotazioni.length.toString(),
                     ),
                   ),
@@ -58,7 +60,7 @@ class _DatiScreenState extends State<DatiScreen> {
                   Expanded(
                     child: InfoCard(
                       icon: Icons.people,
-                      title: 'Persone totali',
+                      title: l10n.homeTotalPeople,
                       value: _prenotazioni
                           .fold(0, (sum, p) => sum + p.numeroPersone)
                           .toString(),
@@ -75,7 +77,7 @@ class _DatiScreenState extends State<DatiScreen> {
                       valueListenable: AppSettings.copertiTotali,
                       builder: (_, coperti, __) => InfoCard(
                         icon: Icons.event_busy,
-                        title: 'Posti rimanenti',
+                        title: l10n.homeRemainingSeats,
                         value:
                             (coperti -
                                     _prenotazioni.fold(
@@ -92,7 +94,7 @@ class _DatiScreenState extends State<DatiScreen> {
                       valueListenable: AppSettings.copertiTotali,
                       builder: (_, coperti, __) => InfoCard(
                         icon: Icons.chair,
-                        title: 'Posti totali',
+                        title: l10n.homeTotalSeats,
                         value: coperti.toString(),
                       ),
                     ),

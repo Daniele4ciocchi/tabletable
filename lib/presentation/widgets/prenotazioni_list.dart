@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabletable/l10n/app_localizations.dart';
 
 import '../../data/models/prenotazione.dart';
 import 'prenotazione_card.dart';
@@ -25,6 +26,7 @@ class PrenotazioniList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -33,9 +35,9 @@ class PrenotazioniList extends StatelessWidget {
           child: Text(title, style: Theme.of(context).textTheme.titleMedium),
         ),
         items.isEmpty
-            ? const Padding(
-                padding: EdgeInsets.all(16),
-                child: Center(child: Text('Nessuna prenotazione')),
+            ? Padding(
+                padding: const EdgeInsets.all(16),
+                child: Center(child: Text(l10n.reservationNone)),
               )
             : ListView.builder(
                 shrinkWrap: true,

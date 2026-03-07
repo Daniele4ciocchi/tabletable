@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabletable/l10n/app_localizations.dart';
 import 'aggiungi_fornitore_screen.dart';
 import 'mostra_fornitore_screen.dart';
 import 'package:tabletable/presentation/widgets/expansible_card.dart';
@@ -50,6 +51,7 @@ class _FornitoriScreenState extends State<FornitoriScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -61,9 +63,8 @@ class _FornitoriScreenState extends State<FornitoriScreen> {
                 children: [
                   SummaryBanner(
                     icon: Icons.store_rounded,
-                    title:
-                        '${_fornitori.length} ${_fornitori.length == 1 ? "fornitore" : "fornitori"}',
-                    subtitle: 'segna cosa e dove compri qui',
+                    title: l10n.suppliersCount(_fornitori.length),
+                    subtitle: l10n.suppliersSubtitle,
                   ),
                   const SizedBox(height: 12),
                   Divider(
@@ -99,7 +100,7 @@ class _FornitoriScreenState extends State<FornitoriScreen> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _aggiungi,
         icon: const Icon(Icons.add_rounded),
-        label: const Text('Aggiungi fornitore'),
+        label: Text(l10n.suppliersAdd),
       ),
     );
   }

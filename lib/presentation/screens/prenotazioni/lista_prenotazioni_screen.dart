@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:tabletable/l10n/app_localizations.dart';
 import 'package:tabletable/presentation/widgets/summary_banner.dart';
 
 import '../../../data/models/prenotazione.dart';
@@ -107,6 +108,7 @@ class _ListaPrenotazioniScreenState extends State<ListaPrenotazioniScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final oggi = DateTime.now();
     final isOggi =
         _giornoSelezionato.year == oggi.year &&
@@ -124,8 +126,8 @@ class _ListaPrenotazioniScreenState extends State<ListaPrenotazioniScreen> {
                 children: [
                   SummaryBanner(
                     icon: Icons.notes_outlined,
-                    title: '${_prenotazioni.length} prenotazioni',
-                    subtitle: 'Prenotazioni registrate',
+                    title: l10n.reservationsCount(_prenotazioni.length),
+                    subtitle: l10n.reservationsRegistered,
                   ),
                   DaySelector(
                     selectedDate: _giornoSelezionato,
@@ -150,8 +152,9 @@ class _ListaPrenotazioniScreenState extends State<ListaPrenotazioniScreen> {
                 children: [
                   if (isOggi) ...[
                     PrenotazioniList(
-                      title:
-                          'Prenotazioni rimanenti (${_prenotazionRimanenti.length})',
+                      title: l10n.reservationsRemaining(
+                        _prenotazionRimanenti.length,
+                      ),
                       items: _prenotazionRimanenti,
                       onModifica: _modifica,
                       onTap: _apriDettagli,
@@ -167,8 +170,9 @@ class _ListaPrenotazioniScreenState extends State<ListaPrenotazioniScreen> {
                         endIndent: 30,
                       ),
                       PrenotazioniList(
-                        title:
-                            'Prenotazioni passate (${_prenotazioniPassate.length})',
+                        title: l10n.reservationsPast(
+                          _prenotazioniPassate.length,
+                        ),
                         items: _prenotazioniPassate,
                         onModifica: _modifica,
                         onTap: _apriDettagli,
@@ -178,7 +182,7 @@ class _ListaPrenotazioniScreenState extends State<ListaPrenotazioniScreen> {
                     ],
                   ] else ...[
                     PrenotazioniList(
-                      title: 'Prenotazioni',
+                      title: l10n.reservationsTitle,
                       items: _prenotazioni,
                       onModifica: _modifica,
                       onTap: _apriDettagli,
@@ -195,7 +199,7 @@ class _ListaPrenotazioniScreenState extends State<ListaPrenotazioniScreen> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _aggiungi,
         icon: const Icon(Icons.add_rounded),
-        label: const Text('Aggiungi prenotazione'),
+        label: Text(l10n.reservationsAdd),
       ),
     );
   }
